@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun moveToFragment(fragment : Fragment){
-        val fragmenttrans = supportFragmentManager.beginTransaction().apply {
+        supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container,fragment)
             commit()
         }
