@@ -1,5 +1,6 @@
 package com.example.instaclone.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.instaclone.AccountSettingsActivity
 import com.example.instaclone.R
 
 class ProfileFragment : Fragment() {
@@ -27,7 +29,8 @@ class ProfileFragment : Fragment() {
 
         val editButton : Button = view.findViewById<Button>(R.id.edit_account_settings_btn)
         editButton.setOnClickListener {
-            Toast.makeText(activity,"Under Maintenance",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity,"Under Maintenance",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context,AccountSettingsActivity::class.java))
 
         }
 

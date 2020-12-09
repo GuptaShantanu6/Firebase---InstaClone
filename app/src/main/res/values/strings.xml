@@ -8,4 +8,6 @@
     <string name="search">Search</string>
     <string name="notifications">Notifications</string>
     <string name="username">Username</string>
+    <string name="full_name">Full Name</string>
+    <string name="change_profile_photo">Change Profile Photo</string>
 </resources>

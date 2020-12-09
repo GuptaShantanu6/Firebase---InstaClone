@@ -25,9 +25,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Username"
-                    android:textSize="30sp"
-                    android:fontFamily="@font/fontsfree_net_billabong"
-                    android:textColor="#000000"/>
+                    android:textSize="25sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:id="@+id/usernamesettingsbutton"
@@ -219,7 +219,7 @@
                     android:id="@+id/images_save_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_save_file_option"
+                    android:src="@drawable/ic_floppy_disk"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"/>

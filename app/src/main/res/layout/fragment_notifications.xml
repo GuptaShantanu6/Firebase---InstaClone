@@ -23,10 +23,10 @@
                     android:layout_marginTop="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Notifications"
-                    android:textSize="30sp"
-                    android:fontFamily="@font/fontsfree_net_billabong"
-                    android:textColor="#000000" />
+                    android:text="@string/notifications"
+                    android:textSize="25sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -38,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar_layout_notifications"
-        android:padding="5dp"
-        />
+        android:padding="5dp"/>
 
 </RelativeLayout>
