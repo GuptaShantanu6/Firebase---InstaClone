@@ -10,4 +10,13 @@
     <string name="username">Username</string>
     <string name="full_name">Full Name</string>
     <string name="change_profile_photo">Change Profile Photo</string>
+    <string name="enter_the_email_address">Enter the Email Address</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="already_account_sign_in">Already Account ? Sign In</string>
 </resources>
