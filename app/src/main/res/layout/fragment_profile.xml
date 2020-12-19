@@ -66,7 +66,7 @@
                     android:id="@+id/pro_image_profile_frag"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:src="@drawable/ic_man"
+                    android:src="@drawable/man"
                     android:padding="10dp"/>
 
                 <LinearLayout

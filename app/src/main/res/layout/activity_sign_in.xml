@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sign_background"
-    tools:context=".SignInActivity">
+    tools:context=".SignInActivity"
+    >
 
     <ImageView
         android:id="@+id/logo"
@@ -60,7 +61,7 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/sign_up_btn"
+        android:id="@+id/new_act_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_new_account"

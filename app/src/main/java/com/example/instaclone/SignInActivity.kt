@@ -15,11 +15,13 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        val sign_up_btn : Button = findViewById<Button>(R.id.sign_up_btn)
+        val new_Act_btn : Button = findViewById<Button>(R.id.new_act_btn)
 
-        sign_up_btn.setOnClickListener {
+        new_Act_btn.setOnClickListener {
             startActivity(Intent(this,SignUpActivity::class.java))
         }
+
+
         
     }
 }
