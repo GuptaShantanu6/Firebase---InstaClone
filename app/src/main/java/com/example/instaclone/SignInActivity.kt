@@ -20,7 +20,6 @@ class SignInActivity : AppCompatActivity() {
         sign_up_btn.setOnClickListener {
             startActivity(Intent(this,SignUpActivity::class.java))
         }
-
-
+        
     }
 }
