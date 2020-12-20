@@ -81,9 +81,9 @@ class SignUpActivity : AppCompatActivity() {
 
         val userMap = HashMap<String,Any>()
         userMap["uid"] = currentUserId
-        userMap["fullName"] = currentUserId
-        userMap["username"] = currentUserId
-        userMap["email"] = currentUserId
+        userMap["fullName"] = fullName
+        userMap["username"] = userName
+        userMap["email"] = emailId
         userMap["bio"] = "Hello There."
         userMap["image"] = "https://firebasestorage.googleapis.com/v0/b/instaclone-138b8.appspot.com/o/Default%20Images%2Fman.png?alt=media&token=a3b6e6e6-8951-4120-81cc-ef64320b4778"
 

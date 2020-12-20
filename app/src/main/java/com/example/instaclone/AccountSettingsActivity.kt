@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.instaclone.fragments.ProfileFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class AccountSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,15 @@ class AccountSettingsActivity : AppCompatActivity() {
 
         save_btn.setOnClickListener {
             Toast.makeText(this,"Save in Maintenance",Toast.LENGTH_SHORT).show()
+        }
+
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(this,"Successfully Logged Out",Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@AccountSettingsActivity,SignInActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
         }
 
     }
