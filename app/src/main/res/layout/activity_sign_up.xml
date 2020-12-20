@@ -82,7 +82,10 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/password_edit_text"
         android:layout_marginTop="23dp"
-        android:background="@drawable/edittext_signup_rounded" />
+        android:background="@drawable/edittext_signup_rounded"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/already_account_btn"
