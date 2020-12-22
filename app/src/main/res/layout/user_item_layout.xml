@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="100dp"
+    android:layout_marginEnd="100dp"
+    android:layout_centerHorizontal="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_image_search"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:src="@drawable/man"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/user_name_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="UserName"
+            android:layout_below="@id/user_profile_image_search"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/user_full_name_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_name_search"
+            android:text="Full Name"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:layout_marginTop="2dp"/>
+
+        <Button
+            android:id="@+id/following_btn"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/user_full_name_search"
+            android:layout_centerHorizontal="true"
+            android:text="Follow"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#1987EC"
+            android:background="@drawable/edittext_signup_rounded" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

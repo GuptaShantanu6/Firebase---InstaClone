@@ -29,7 +29,7 @@
                     android:layout_centerVertical="true"
                     />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/searchtext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,7 +48,8 @@
         android:id="@+id/recycler_view_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar_layout_search">
+        android:layout_below="@id/app_bar_layout_search"
+        tools:listitem="@layout/user_item_layout">
 
 
     </androidx.recyclerview.widget.RecyclerView>
