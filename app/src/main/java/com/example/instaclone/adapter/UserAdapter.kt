@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.instaclone.Model.User
 import com.example.instaclone.R
 import com.squareup.picasso.Picasso
+import java.util.*
 
 class UserAdapter (private var mContext : Context, private var mUser : List<User>, private var isFragment : Boolean = false)
     : RecyclerView.Adapter<UserAdapter.ViewHolder>()
@@ -27,7 +28,7 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
         val user = mUser[position]
         holder.usernameTextView.text = user.getUserName()
-        holder.fullnameTextView.text = user.getFullName()
+        holder.fullnameTextView.text = user.getFullName().capitalizeFirstLetter()
         Picasso.get().load(user.getImage()).placeholder(R.drawable.ic_man).into(holder.profileImageSearchView)
     }
 
@@ -42,5 +43,6 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
         var followButton : Button = itemView.findViewById<Button>(R.id.following_btn)
     }
 
+    fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
 
 }
