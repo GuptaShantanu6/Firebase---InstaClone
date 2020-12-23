@@ -13,6 +13,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
+import kotlin.collections.HashMap
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +46,10 @@ class SignUpActivity : AppCompatActivity() {
         val password : String = password_edit_txt.text.toString()
 
         when{
-            TextUtils.isEmpty(full_name) -> fullname_edit_txt.setError("Name cannot be Empty")
-            TextUtils.isEmpty(user_name) -> username_Edit_txt.setError("Username cannot be Empty")
-            TextUtils.isEmpty(email_id) -> emailId_edit_txt.setError("Email Id cannot be Empty")
-            TextUtils.isEmpty(password) -> password_edit_txt.setError("Password cannot be Empty")
+            TextUtils.isEmpty(full_name) -> fullname_edit_txt.error = "Name cannot be Empty"
+            TextUtils.isEmpty(user_name) -> username_Edit_txt.error = "Username cannot be Empty"
+            TextUtils.isEmpty(email_id) -> emailId_edit_txt.error = "Email Id cannot be Empty"
+            TextUtils.isEmpty(password) -> password_edit_txt.error = "Password cannot be Empty"
 
             else -> {
                 val progressDialog = ProgressDialog(this@SignUpActivity)
@@ -81,8 +83,8 @@ class SignUpActivity : AppCompatActivity() {
 
         val userMap = HashMap<String,Any>()
         userMap["uid"] = currentUserId
-        userMap["fullName"] = fullName
-        userMap["username"] = userName
+        userMap["fullName"] = fullName.toLowerCase(Locale.ROOT)
+        userMap["username"] = userName.toLowerCase(Locale.ROOT)
         userMap["email"] = emailId
         userMap["bio"] = "Hello There."
         userMap["image"] = "https://firebasestorage.googleapis.com/v0/b/instaclone-138b8.appspot.com/o/Default%20Images%2Fman.png?alt=media&token=a3b6e6e6-8951-4120-81cc-ef64320b4778"

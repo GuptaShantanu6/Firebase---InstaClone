@@ -1,64 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:layout_marginStart="100dp"
-    android:layout_marginEnd="100dp"
-    android:layout_centerHorizontal="true">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/indi_user_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile_image_search"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:src="@drawable/man"
+            android:layout_alignParentStart="true"
             android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"/>
+            />
 
-        <TextView
-            android:id="@+id/user_name_search"
+        <LinearLayout
+            android:id="@+id/info_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="UserName"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/user_full_name_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full Name"
+                android:textSize="16sp"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="UserName"
-            android:layout_below="@id/user_profile_image_search"
-            android:gravity="center"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginTop="5dp"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/user_full_name_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_name_search"
-            android:text="Full Name"
-            android:gravity="center"
-            android:textSize="17sp"
-            android:layout_marginTop="2dp"/>
-
-        <Button
-            android:id="@+id/following_btn"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@id/user_full_name_search"
-            android:layout_centerHorizontal="true"
-            android:text="Follow"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#1987EC"
-            android:background="@drawable/edittext_signup_rounded" />
+            <Button
+                android:id="@+id/following_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/edittext_signup_rounded"
+                android:text="Follow"
+                android:textColor="#1987EC"
+                android:layout_marginTop="30dp"
+                android:textAllCaps="false"
+                android:textSize="15sp"/>
+        </RelativeLayout>
 
 
-    </RelativeLayout>
 
-</RelativeLayout>
+
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/user_name_search"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="UserName"-->
+<!--            android:layout_below="@id/user_profile_image_search"-->
+<!--            android:gravity="center"-->
+<!--            android:textSize="25sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="#000000"-->
+<!--            android:layout_marginTop="5dp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/user_full_name_search"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/user_name_search"-->
+<!--            android:text="Full Name"-->
+<!--            android:gravity="center"-->
+<!--            android:textSize="17sp"-->
+<!--            android:layout_marginTop="2dp"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/following_btn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_below="@id/user_full_name_search"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:text="Follow"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginStart="40dp"-->
+<!--            android:layout_marginEnd="40dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:textColor="#1987EC"-->
+<!--            android:background="@drawable/edittext_signup_rounded" />-->
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CFC9CB"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="5dp"/>
+
+</LinearLayout>
