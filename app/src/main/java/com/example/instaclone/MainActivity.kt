@@ -11,10 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.instaclone.fragments.HomeFragment
-import com.example.instaclone.fragments.NotificationsFragment
-import com.example.instaclone.fragments.ProfileFragment
-import com.example.instaclone.fragments.SearchFragment
+import com.example.instaclone.fragments.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +28,9 @@ class MainActivity : AppCompatActivity() {
                 moveToFragment(selectedFragment as SearchFragment)
             }
             R.id.nav_add_post ->{
-                it.isChecked = false
+//                it.isChecked = false
+                selectedFragment = AddPostFragment()
+                moveToFragment(selectedFragment as AddPostFragment)
 //                startActivity(Intent(this@MainActivity,AddPostActivity::class.java))
 
             }
