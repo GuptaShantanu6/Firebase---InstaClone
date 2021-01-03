@@ -1,6 +1,7 @@
 package com.example.instaclone.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instaclone.Model.User
 import com.example.instaclone.R
+import com.example.instaclone.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -41,48 +44,62 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
 
         checkFollowingStatus(user.getUID(),holder.followButton)
 
-        holder.followButton.setOnClickListener {
-            if (holder.followButton.text.toString()=="Follow"){
-                firebaseUser?.uid.let {
-                    FirebaseDatabase.getInstance().reference
-                            .child("Follow").child(it.toString())
-                            .child("Following").child(user.getUID())
-                            .setValue(true).addOnCompleteListener { task ->
-                                if (task.isSuccessful){
-                                    firebaseUser?.uid.let {
-                                        FirebaseDatabase.getInstance().reference
-                                                .child("Follow").child(user.getUID())
-                                                .child("Followers").child(it.toString())
-                                                .setValue(true).addOnCompleteListener { task ->
-                                                    if (task.isSuccessful) {
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val pref = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
+            pref.putString("profileId",user.getUID())
+            pref.apply()
 
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container,ProfileFragment()).commit()
+        })
+
+        if (user.getUID() == firebaseUser?.uid){
+            holder.followButton.visibility = View.GONE
+        }
+        else{
+            holder.followButton.visibility = View.VISIBLE
+            holder.followButton.setOnClickListener {
+                if (holder.followButton.text.toString() == "Follow") {
+                    firebaseUser?.uid.let {
+                        FirebaseDatabase.getInstance().reference
+                                .child("Follow").child(it.toString())
+                                .child("Following").child(user.getUID())
+                                .setValue(true).addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        firebaseUser?.uid.let {
+                                            FirebaseDatabase.getInstance().reference
+                                                    .child("Follow").child(user.getUID())
+                                                    .child("Followers").child(it.toString())
+                                                    .setValue(true).addOnCompleteListener { task ->
+                                                        if (task.isSuccessful) {
+
+                                                        }
                                                     }
-                                                }
 
+                                        }
                                     }
                                 }
-                            }
-                }
-            }
-            else{
-                firebaseUser?.uid.let {
-                    FirebaseDatabase.getInstance().reference
-                            .child("Follow").child(it.toString())
-                            .child("Following").child(user.getUID())
-                            .removeValue().addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    firebaseUser?.uid.let {
-                                        FirebaseDatabase.getInstance().reference
-                                                .child("Follow").child(user.getUID())
-                                                .child("Followers").child(it.toString())
-                                                .removeValue().addOnCompleteListener {
-                                                    if (task.isSuccessful) {
+                    }
+                } else {
+                    firebaseUser?.uid.let {
+                        FirebaseDatabase.getInstance().reference
+                                .child("Follow").child(it.toString())
+                                .child("Following").child(user.getUID())
+                                .removeValue().addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        firebaseUser?.uid.let {
+                                            FirebaseDatabase.getInstance().reference
+                                                    .child("Follow").child(user.getUID())
+                                                    .child("Followers").child(it.toString())
+                                                    .removeValue().addOnCompleteListener {
+                                                        if (task.isSuccessful) {
 
+                                                        }
                                                     }
-                                                }
+                                        }
                                     }
                                 }
-                            }
+                    }
                 }
             }
         }
