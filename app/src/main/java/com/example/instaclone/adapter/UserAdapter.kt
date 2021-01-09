@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instaclone.Model.User
 import com.example.instaclone.R
+import com.example.instaclone.adapter.UserAdapter.ViewHolder
 import com.example.instaclone.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -32,8 +33,7 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
 //        val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false)
 //        return UserAdapter.ViewHolder(view)
 
-        val h = ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false))
-        return h
+        return ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false))
     }
 
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
