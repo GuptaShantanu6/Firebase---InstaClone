@@ -66,7 +66,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun searchUsers(input: String) {
-        val query = FirebaseDatabase.getInstance().getReference().child("Users")
+        val query = FirebaseDatabase.getInstance().reference.child("Users")
             .orderByChild("fullName").startAt(input)
             .endAt(input + "\uf8ff")
 

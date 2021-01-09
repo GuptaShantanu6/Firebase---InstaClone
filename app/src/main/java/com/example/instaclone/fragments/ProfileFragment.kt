@@ -42,14 +42,14 @@ class ProfileFragment : Fragment() {
 
         var firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 
-        editButton.text = "Edit Profile"
+//        editButton.text = "Edit Profile"
 
-        if (profileId == firebaseUser.uid){
-            editButton.text = "Edit Profile"
-        }
-        else{
-            checkFollowAndFollowing(editButton,firebaseUser)
-        }
+//        if (profileId == firebaseUser.uid){
+//            editButton.text = "Edit Profile"
+//        }
+//        else{
+//            checkFollowAndFollowing(editButton,firebaseUser)
+//        }
 
 
 
@@ -114,7 +114,7 @@ class ProfileFragment : Fragment() {
         database.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 usernameUpdated.text = snapshot.child(firebaseUser.uid).child("username").value as CharSequence?
-                fullnameUpdated.text = snapshot.child(firebaseUser.uid).child("username").value.toString().capitalizeFirstLetter()
+                fullnameUpdated.text = snapshot.child(firebaseUser.uid).child("fullName").value.toString().capitalizeFirstLetter()
                 bioUpdated.text = snapshot.child(firebaseUser.uid).child("bio").value.toString()
             }
 

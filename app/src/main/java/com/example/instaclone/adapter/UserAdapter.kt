@@ -49,8 +49,8 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
             pref.putString("profileId",user.getUID())
             pref.apply()
 
-            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container,ProfileFragment()).commit()
+//            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragment_container,ProfileFragment()).commit()
         })
 
         if (user.getUID() == firebaseUser?.uid){
