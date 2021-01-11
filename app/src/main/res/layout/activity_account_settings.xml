@@ -27,13 +27,13 @@
                     android:layout_alignParentStart="true"
                     android:src="@drawable/ic_close_circular_button_symbol"/>
 
-                <ImageView
-                    android:src="@drawable/ic_check"
-                    android:id="@+id/save_btn_accout_Settings"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp" />
+<!--                <ImageView-->
+<!--                    android:src="@drawable/ic_check"-->
+<!--                    android:id="@+id/save_btn_account_Settings"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_marginEnd="15dp" />-->
 
             </RelativeLayout>
 
@@ -63,7 +63,7 @@
 
     <EditText
         android:id="@+id/change_name_account_settings"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/change_image_btn"
         android:layout_marginStart="20dp"
@@ -71,9 +71,18 @@
         android:layout_marginTop="16dp"
         android:hint="@string/full_name"/>
 
+    <ImageView
+        android:id="@+id/fullnameSaveBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_toEndOf="@id/change_name_account_settings"
+        android:src="@drawable/ic_enter"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/username_account_settings"/>
+
     <EditText
         android:id="@+id/username_account_settings"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -81,15 +90,35 @@
         android:hint="UserName"
         android:layout_below="@id/change_name_account_settings" />
 
+    <ImageView
+        android:id="@+id/usernameSaveBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_toEndOf="@id/username_account_settings"
+        android:src="@drawable/ic_enter"
+        android:layout_above="@id/bio_account_settings"
+        android:layout_alignParentEnd="true"
+        />
+
     <EditText
         android:id="@+id/bio_account_settings"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="16dp"
         android:hint="Bio"
         android:layout_below="@id/username_account_settings"/>
+
+    <ImageView
+        android:id="@+id/bioSaveBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_enter"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/bio_account_settings"
+        android:layout_below="@id/username_account_settings"
+        android:layout_marginTop="25sp"/>
 
 
     <Button
@@ -120,6 +149,17 @@
         android:textAllCaps="false"
         android:layout_alignParentBottom="true"
         android:textColor="#FF1A03"/>
+
+    <CheckBox
+        android:id="@+id/bioEmptyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bio_account_settings"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="90dp"
+        android:text="@string/leave_bio_empty"
+        android:textSize="15sp"/>
+
 
 
 

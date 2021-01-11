@@ -5,10 +5,8 @@ import android.content.Intent
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.text.TextUtils
+import android.widget.*
 import com.example.instaclone.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -27,7 +25,7 @@ class AccountSettingsActivity : AppCompatActivity() {
         val close_btn : ImageView = findViewById<ImageView>(R.id.close_btn_account_settings)
         val logout : Button = findViewById<Button>(R.id.logout_btn_account_settings)
 
-        val save_btn : ImageView = findViewById<ImageView>(R.id.save_btn_accout_Settings)
+//        val save_btn : ImageView = findViewById<ImageView>(R.id.save_btn_account_Settings)
 
         val newFullName : EditText = findViewById<EditText>(R.id.change_name_account_settings)
         val newUserName : EditText = findViewById<EditText>(R.id.username_account_settings)
@@ -37,23 +35,73 @@ class AccountSettingsActivity : AppCompatActivity() {
             startActivity(Intent(baseContext,MainActivity::class.java))
         }
 
-        save_btn.setOnClickListener {
-//            Toast.makeText(this,"Save in Maintenance",Toast.LENGTH_SHORT).show()
-            val database = FirebaseDatabase.getInstance().reference.child("Users").child(currentUser.uid)
-            val newMap = HashMap<String,Any>()
+//        save_btn.setOnClickListener {
+////            Toast.makeText(this,"Save in Maintenance",Toast.LENGTH_SHORT).show()
+//            val database = FirebaseDatabase.getInstance().reference.child("Users").child(currentUser.uid)
+//            val newMap = HashMap<String,Any>()
+//
+//            val f = newFullName.text.toString()
+//            val u = newUserName.text.toString()
+//            val b = newBio.text.toString()
+//
+//            if (f.isNotBlank())newMap["fullName"] = f.toLowerCase(Locale.ROOT)
+//            if (u.isNotBlank())newMap["username"] = u.toLowerCase(Locale.ROOT)
+//            if (b.isNotBlank())newMap["bio"] = b
+//
+//            database.updateChildren(newMap)
+//            Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
+//            backToMain()
+//
+//        }
 
+        val usernameSaveBtn : ImageView = findViewById<ImageView>(R.id.usernameSaveBtn)
+        val fullnameSaveBtn : ImageView = findViewById<ImageView>(R.id.fullnameSaveBtn)
+        val bioSaveBtn : ImageView = findViewById<ImageView>(R.id.bioSaveBtn)
+
+        val database = FirebaseDatabase.getInstance().reference.child("Users").child(currentUser.uid)
+
+        fullnameSaveBtn.setOnClickListener {
             val f = newFullName.text.toString()
+            if (f.isBlank())newFullName.error = "Full Name cannot be Empty"
+            else{
+                val newMap = HashMap<String,Any>()
+                newMap["fullName"] = f.toLowerCase(Locale.ROOT)
+                database.updateChildren(newMap)
+                Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        usernameSaveBtn.setOnClickListener {
             val u = newUserName.text.toString()
-            val b = newBio.text.toString()
-
-            if (f.isNotBlank())newMap["fullName"] = f.toLowerCase(Locale.ROOT)
-            if (u.isNotBlank())newMap["username"] = u.toLowerCase(Locale.ROOT)
-            if (b.isNotBlank())newMap["bio"] = b
-
-            database.updateChildren(newMap)
-            Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
-            backToMain()
-
+            if (u.isBlank())newUserName.error = "User Name cannot be Empty"
+            else{
+                val newMap = HashMap<String,Any>()
+                newMap["username"] = u.toLowerCase(Locale.ROOT)
+                database.updateChildren(newMap)
+                Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
+            }
+        }
+        val checkBox : CheckBox = findViewById<CheckBox>(R.id.bioEmptyCheckBox)
+        checkBox.isChecked = false
+        bioSaveBtn.setOnClickListener {
+            val newMap = HashMap<String,Any>()
+            if (checkBox.isChecked){
+                newMap["bio"] = ""
+                database.updateChildren(newMap)
+                Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
+                checkBox.isChecked = false
+            }
+            else{
+                val b = newBio.text.toString()
+                if (b.isBlank()){
+                    newBio.error = "Bio cannot be empty"
+                }
+                else{
+                    newMap["bio"] = b.toLowerCase(Locale.ROOT)
+                    database.updateChildren(newMap)
+                    Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         logout.setOnClickListener {
