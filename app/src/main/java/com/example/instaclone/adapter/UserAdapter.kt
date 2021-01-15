@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.instaclone.Model.User
 import com.example.instaclone.R
 import com.example.instaclone.adapter.UserAdapter.ViewHolder
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -29,6 +31,7 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
     : RecyclerView.Adapter<UserAdapter.ViewHolder>()
 {
     private var firebaseUser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    val storage = FirebaseStorage.getInstance().reference
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ViewHolder {
 //        val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false)
 //        return UserAdapter.ViewHolder(view)
@@ -40,7 +43,15 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
         val user = mUser[position]
         holder.usernameTextView.text = user.getUserName()
         holder.fullnameTextView.text = user.getFullName().capitalizeFirstLetter()
-        Picasso.get().load(user.getImage()).placeholder(R.drawable.ic_man).into(holder.profileImageSearchView)
+//        Picasso.get().load(user.getImage()).placeholder(R.drawable.ic_man).into(holder.profileImageSearchView)
+        storage.child("Default Images/").child(user.getUID()).downloadUrl.addOnSuccessListener {
+            val x = it.toString()
+            Glide.with(mContext)
+                    .load(x)
+                    .into(holder.profileImageSearchView)
+        }.addOnFailureListener {
+
+        }
 
         checkFollowingStatus(user.getUID(),holder.followButton)
 
@@ -103,6 +114,7 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                 }
             }
         }
+
 //        val message : String = user.getFullName().capitalizeFirstLetter()
 //        Toast.makeText(mContext,"Clicked in $message",Toast.LENGTH_SHORT).show()
     }
