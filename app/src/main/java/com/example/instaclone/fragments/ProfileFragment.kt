@@ -2,17 +2,24 @@ package com.example.instaclone.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.example.instaclone.AccountSettingsActivity
 import com.example.instaclone.R
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import de.hdodenhof.circleimageview.CircleImageView
 
 class ProfileFragment : Fragment() {
 
@@ -23,6 +30,7 @@ class ProfileFragment : Fragment() {
 
 //    var total_followers : TextView? = view?.findViewById<TextView>(R.id.total_followers)
 //    val total_following : TextView? = view?.findViewById<TextView>(R.id.total_following)
+    val storage = FirebaseStorage.getInstance().reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +42,8 @@ class ProfileFragment : Fragment() {
         val editButton : Button = view.findViewById<Button>(R.id.edit_account_settings_btn)
         val total_followers : TextView = view.findViewById<TextView>(R.id.total_followers)
         val total_following : TextView = view.findViewById<TextView>(R.id.total_following)
+
+        val profileImage : CircleImageView = view.findViewById<CircleImageView>(R.id.pro_image_profile_frag)
 
         val pref = context?.getSharedPreferences("PREFS",Context.MODE_PRIVATE)
         if (pref != null){
@@ -105,8 +115,20 @@ class ProfileFragment : Fragment() {
 //        })
 
         changeUserNameAndFullNameAndBio(usernameUpdated,firebaseUser,fullnameUpdated,bioUpdated)
+        checkForProfileImage(firebaseUser,profileImage,profileImage)
 
         return view
+    }
+
+    private fun checkForProfileImage(firebaseUser: FirebaseUser, profileImage: CircleImageView, tempImage: ImageView) {
+        storage.child("Default Images/").child(firebaseUser.uid).downloadUrl.addOnSuccessListener {
+            val x = it.toString()
+            Glide.with(this)
+                .load(x)
+                .into(tempImage)
+        }.addOnFailureListener {
+            //Do nothing, i.e. leave the default image as it is.
+        }
     }
 
     private fun changeUserNameAndFullNameAndBio(usernameUpdated: TextView, firebaseUser: FirebaseUser, fullnameUpdated: TextView, bioUpdated: TextView) {

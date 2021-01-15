@@ -120,6 +120,17 @@
         android:layout_below="@id/username_account_settings"
         android:layout_marginTop="25sp"/>
 
+    <CheckBox
+        android:id="@+id/bioEmptyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bio_account_settings"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="90dp"
+        android:text="@string/leave_bio_empty"
+        android:textSize="15sp"/>
+
+
 
     <Button
         android:id="@+id/logout_btn_account_settings"
@@ -150,15 +161,7 @@
         android:layout_alignParentBottom="true"
         android:textColor="#FF1A03"/>
 
-    <CheckBox
-        android:id="@+id/bioEmptyCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bio_account_settings"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="90dp"
-        android:text="@string/leave_bio_empty"
-        android:textSize="15sp"/>
+
 
 
 
