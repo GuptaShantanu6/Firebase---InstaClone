@@ -15,7 +15,7 @@ import com.example.instaclone.fragments.*
 
 class MainActivity : AppCompatActivity() {
 
-    internal var selectedFragment : Fragment? = null
+    private var selectedFragment : Fragment? = null
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         when(it.itemId){
