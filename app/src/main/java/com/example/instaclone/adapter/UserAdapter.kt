@@ -1,7 +1,9 @@
 package com.example.instaclone.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.provider.Settings.Global.putString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +12,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.instaclone.AccountSettingsActivity
 import com.example.instaclone.Model.User
 import com.example.instaclone.R
+import com.example.instaclone.UserClickFromSearchActivity
 import com.example.instaclone.adapter.UserAdapter.ViewHolder
 import com.example.instaclone.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -57,8 +62,17 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             val pref = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
-            pref.putString("profileId",user.getUID())
-            pref.apply()
+//            pref.putString("profileId",user.getUID())
+//            pref.apply()
+            pref.apply{
+                putString("profileID",user.getUID())
+                apply()
+            }
+            if (user.getUID() != firebaseUser?.uid){
+                val context = mContext
+                val intent = Intent(context,UserClickFromSearchActivity::class.java)
+                context.startActivity(intent)
+            }
 
 //            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
 //                    .replace(R.id.fragment_container,ProfileFragment()).commit()
@@ -117,6 +131,8 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
 
 //        val message : String = user.getFullName().capitalizeFirstLetter()
 //        Toast.makeText(mContext,"Clicked in $message",Toast.LENGTH_SHORT).show()
+
+
     }
 
 
