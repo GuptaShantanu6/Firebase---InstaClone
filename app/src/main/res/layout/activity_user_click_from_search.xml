@@ -160,16 +160,14 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/edit_account_settings_btn"
+                    <TextView
+                        android:id="@+id/statusBtn"
+                        android:autoSizeTextType="uniform"
                         android:layout_width="190dp"
                         android:layout_height="32dp"
                         android:text="Edit Profile"
                         android:padding="5dp"
-                        android:textAllCaps="false"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/edit_button_border"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"/>
+                        android:layout_marginTop="2dp" />
 
                 </LinearLayout>
 

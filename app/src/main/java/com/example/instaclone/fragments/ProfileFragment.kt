@@ -30,7 +30,7 @@ class ProfileFragment : Fragment() {
 
 //    var total_followers : TextView? = view?.findViewById<TextView>(R.id.total_followers)
 //    val total_following : TextView? = view?.findViewById<TextView>(R.id.total_following)
-    val storage = FirebaseStorage.getInstance().reference
+    private val storage = FirebaseStorage.getInstance().reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,6 +91,14 @@ class ProfileFragment : Fragment() {
         val fullnameUpdated : TextView = view.findViewById<TextView>(R.id.full_name_profile_frag)
         val bioUpdated : TextView = view.findViewById<TextView>(R.id.bio_profile_frag)
 
+//        val debugButton : Button = view.findViewById<Button>(R.id.dImage)
+//
+//        debugButton.setOnClickListener {
+//            storage.child("Default Images").child(firebaseUser.uid).downloadUrl.addOnSuccessListener {
+//                Log.d("Image URL",it.toString())
+//            }
+//        }
+
 //        val currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
 //        val firebaseUser = FirebaseDatabase.getInstance().reference.child("Users")
 
@@ -121,7 +129,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun checkForProfileImage(firebaseUser: FirebaseUser, profileImage: CircleImageView, tempImage: ImageView) {
-        storage.child("Default Images/").child(firebaseUser.uid).downloadUrl.addOnSuccessListener {
+        storage.child("Default Images").child(firebaseUser.uid).downloadUrl.addOnSuccessListener {
             val x = it.toString()
             Glide.with(this)
                 .load(x)

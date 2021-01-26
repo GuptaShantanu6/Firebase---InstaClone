@@ -226,6 +226,14 @@
 
             </LinearLayout>
 
+<!--            <Button-->
+<!--                android:id="@+id/dImage"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Debug Image"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textStyle="bold"/>-->
+
 
         </LinearLayout>
 

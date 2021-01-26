@@ -1,23 +1,17 @@
 package com.example.instaclone
 
-import android.app.ProgressDialog
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
-import android.text.TextUtils
-import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
-import com.example.instaclone.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.*
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import de.hdodenhof.circleimageview.CircleImageView
@@ -83,7 +77,9 @@ class AccountSettingsActivity : AppCompatActivity() {
         database.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 newBio.text = Editable.Factory.getInstance().newEditable(snapshot.child("bio").value as CharSequence?)
-                newFullName.text = Editable.Factory.getInstance().newEditable(snapshot.child("fullName").value as CharSequence?)
+//                newFullName.text = Editable.Factory.getInstance().newEditable(snapshot.child("fullName").value as CharSequence?)
+                val temp = snapshot.child("fullName").value.toString()
+                newFullName.text = Editable.Factory.getInstance().newEditable(temp.capitalizeFirstLetter())
                 newUserName.text = Editable.Factory.getInstance().newEditable(snapshot.child("username").value as CharSequence?)
             }
 
@@ -165,13 +161,16 @@ class AccountSettingsActivity : AppCompatActivity() {
         }
 
         imageView = findViewById<CircleImageView>(R.id.profile_imag_account_settings)
-        checkForProfileImage(currentUser,storage,imageView)
+        checkForProfileImage(currentUser,storage,imageView,database)
 
 
     }
 
-    private fun checkForProfileImage(currentUser: FirebaseUser, storage: StorageReference, imageView: CircleImageView?) {
+    private fun checkForProfileImage(currentUser: FirebaseUser, storage: StorageReference, imageView: CircleImageView?, database: DatabaseReference) {
         storage.child("Default Images/").child(currentUser.uid).downloadUrl.addOnSuccessListener {
+            val newMap = HashMap<String,Any>()
+            newMap["image"] = it.toString()
+            database.updateChildren(newMap)
             val x = it.toString()
             if (imageView != null) {
                 Glide.with(this)

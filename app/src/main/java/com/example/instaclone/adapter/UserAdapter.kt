@@ -49,7 +49,7 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
         holder.usernameTextView.text = user.getUserName()
         holder.fullnameTextView.text = user.getFullName().capitalizeFirstLetter()
 //        Picasso.get().load(user.getImage()).placeholder(R.drawable.ic_man).into(holder.profileImageSearchView)
-        storage.child("Default Images/").child(user.getUID()).downloadUrl.addOnSuccessListener {
+        storage.child("Default Images").child(user.getUID()).downloadUrl.addOnSuccessListener {
             val x = it.toString()
             Glide.with(mContext)
                     .load(x)
