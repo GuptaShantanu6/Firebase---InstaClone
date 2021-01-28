@@ -20,4 +20,6 @@
     <string name="email_address">Email Address</string>
     <string name="already_account_sign_in">Already Account ? Sign In</string>
     <string name="leave_bio_empty">Leave Bio Empty</string>
+    <string name="want_to_describe_your_post">Want to describe your post ?</string>
+    <string name="instaclone_2021">InstaClone @ 2021</string>
 </resources>

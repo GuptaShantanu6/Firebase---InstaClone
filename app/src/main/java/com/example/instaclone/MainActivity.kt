@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.nav_add_post ->{
 //                it.isChecked = false
-                selectedFragment = AddPostFragment()
-                moveToFragment(selectedFragment as AddPostFragment)
+//                selectedFragment = AddPostFragment()
+//                moveToFragment(selectedFragment as AddPostFragment)
+                startActivity(Intent(this@MainActivity,AddPostActivity::class.java))
 //                startActivity(Intent(this@MainActivity,AddPostActivity::class.java))
 
             }

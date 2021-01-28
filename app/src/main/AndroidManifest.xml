@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InstaClone">
+        <activity android:name=".AddPostActivity"></activity>
         <activity android:name=".UserClickFromSearchActivity" />
         <activity android:name=".fragments.AddPostActivity" />
         <activity android:name=".SignUpActivity" />

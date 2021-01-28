@@ -163,7 +163,6 @@ class AccountSettingsActivity : AppCompatActivity() {
         imageView = findViewById<CircleImageView>(R.id.profile_imag_account_settings)
         checkForProfileImage(currentUser,storage,imageView,database)
 
-
     }
 
     private fun checkForProfileImage(currentUser: FirebaseUser, storage: StorageReference, imageView: CircleImageView?, database: DatabaseReference) {
@@ -208,7 +207,7 @@ class AccountSettingsActivity : AppCompatActivity() {
                         }
                     }
                 }
-    }
+         }
 
     private fun backToMain() {
         val intent = Intent(this@AccountSettingsActivity,SignInActivity::class.java)
