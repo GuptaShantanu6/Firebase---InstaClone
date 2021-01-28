@@ -15,9 +15,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import android.content.Context
-import android.view.inputmethod.InputMethodManager;
-
-
+import android.view.inputmethod.InputMethodManager
+import com.airbnb.lottie.LottieAnimationView
 
 class AddPostActivity : AppCompatActivity() {
 
@@ -63,41 +62,39 @@ class AddPostActivity : AppCompatActivity() {
             } else {
                 //Upload the image
                 //Functionality to be made
-                uploadImagePostToFirebaseStorage(imageUri!!, storage, currentUser,description.text.toString())
+                uploadImagePostToFirebaseStorage(imageUri!!, storage, currentUser,description.text.toString(),addPictureBtn)
 //                val x = getRandomString(2)
             }
 
         }
     }
 
-    private fun uploadImagePostToFirebaseStorage(imageUri: Uri, storage: StorageReference, currentUser: FirebaseUser,description : String) {
+    private fun uploadImagePostToFirebaseStorage(imageUri: Uri, storage: StorageReference, currentUser: FirebaseUser,description : String,addPictureBtn : Button) {
         val x = getRandomString(28)
-//        var a : Int = 0
-//        storage.child("Posts Images").child(currentUser.uid.toString()).child(x).child("Photo").putFile(imageUri).addOnSuccessListener {
-//            a+=1
-//        }.addOnFailureListener {
-//
-//        }
-//        storage.child("Posts Images").child(currentUser.uid.toString()).child(x).child("Description").putStream(description.byteInputStream()).addOnSuccessListener {
-//            a+=1
-//        }.addOnFailureListener {
-//
-//        }
-//        if (a==2){
-//            Toast.makeText(this,"Post Uploaded Successfully",Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(baseContext,MainActivity::class.java))
-//        }
-//        else{
-//            Toast.makeText(this,"Error in Uploading, Please try again",Toast.LENGTH_SHORT).show()
-//        }
+        val lottie : LottieAnimationView = findViewById<LottieAnimationView>(R.id.Lottie1)
+        lottie.setAnimation("297-loading-rainbow.json")
+        lottie.bringToFront()
+
+        addPictureBtn.isEnabled = false
+        addPictureBtn.isClickable = false
+
+        lottie.playAnimation()
+        lottie.loop(true)
+
         storage.child("Posts Images").child(currentUser.uid.toString()).child(x).child("Photo").putFile(imageUri).addOnSuccessListener {
             storage.child("Posts Images").child(currentUser.uid.toString()).child(x).child("Description").putStream(description.byteInputStream()).addOnSuccessListener {
+                lottie.loop(false)
+
+                addPictureBtn.isClickable = true
+                addPictureBtn.isEnabled = true
+
                 Toast.makeText(this,"Post Successfully uploaded",Toast.LENGTH_SHORT).show()
                 startActivity(Intent(baseContext,MainActivity::class.java))
             }.addOnFailureListener {
                 Toast.makeText(this,"Error, Please try again",Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

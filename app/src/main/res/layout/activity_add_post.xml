@@ -42,7 +42,16 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/Lottie1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:lottie_speed="1"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <LinearLayout
+        android:id="@+id/mainKaamView"
         android:layout_below="@id/app_bar_layout_add_post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
