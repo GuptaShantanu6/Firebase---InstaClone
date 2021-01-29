@@ -29,11 +29,7 @@ class MainActivity : AppCompatActivity() {
                 moveToFragment(selectedFragment as SearchFragment)
             }
             R.id.nav_add_post ->{
-//                it.isChecked = false
-//                selectedFragment = AddPostFragment()
-//                moveToFragment(selectedFragment as AddPostFragment)
-                startActivity(Intent(this@MainActivity,AddPostActivity::class.java))
-//                startActivity(Intent(this@MainActivity,AddPostActivity::class.java))
+                startActivity(Intent(this@MainActivity,UploadPostActivity::class.java))
 
             }
             R.id.nav_notifications -> {

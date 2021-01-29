@@ -88,7 +88,7 @@ class UserClickFromSearchActivity : AppCompatActivity() {
                     .load(x)
                     .into(proImage)
         }.addOnFailureListener {
-            Toast.makeText(this,"Unable to load Photo",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this,"Unable to load Photo",Toast.LENGTH_SHORT).show()
             //the default profile image is shown.
         }
 //        Log.d("other User Id",otherUserUID)

@@ -3,34 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true">
         
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/home_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@android:color/white">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_instagram_logo"
+<!--                <ImageView-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:src="@drawable/ic_instagram_logo"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    />-->
+
+                <com.airbnb.lottie.LottieAnimationView
                     android:layout_alignParentStart="true"
-                    />
+                    android:id="@+id/homeActivityIcon"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    app:lottie_speed="1"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="120dp"/>
 
                 <ImageView
                     android:id="@+id/sendButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_width="30dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/ic_send"
                     android:layout_centerInParent="true"
                     android:layout_alignParentEnd="true"

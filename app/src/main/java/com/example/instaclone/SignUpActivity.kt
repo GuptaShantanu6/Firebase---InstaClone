@@ -15,16 +15,23 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.log
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        val logo : LottieAnimationView = findViewById<LottieAnimationView>(R.id.logo)
+        logo.setAnimation("mainActivityAnim.json")
+        logo.playAnimation()
+        logo.loop(true)
 
         val already_act_btn : Button = findViewById<Button>(R.id.already_account_btn)
 

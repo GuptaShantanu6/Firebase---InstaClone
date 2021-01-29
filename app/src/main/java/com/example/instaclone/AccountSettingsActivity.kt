@@ -110,8 +110,8 @@ class AccountSettingsActivity : AppCompatActivity() {
                 Toast.makeText(this,"Successfully Saved",Toast.LENGTH_SHORT).show()
 //            }
         }
-        val checkBox : CheckBox = findViewById<CheckBox>(R.id.bioEmptyCheckBox)
-        checkBox.isChecked = false
+//        val checkBox : CheckBox = findViewById<CheckBox>(R.id.bioEmptyCheckBox)
+//        checkBox.isChecked = false
         bioSaveBtn.setOnClickListener {
             val newMap = HashMap<String,Any>()
 //            if (checkBox.isChecked){

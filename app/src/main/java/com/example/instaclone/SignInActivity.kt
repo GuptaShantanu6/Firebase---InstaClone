@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
@@ -24,6 +25,11 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        val logo : LottieAnimationView = findViewById<LottieAnimationView>(R.id.logo)
+        logo.setAnimation("mainActivityAnim.json")
+        logo.playAnimation()
+        logo.loop(true)
 
         val new_Act_btn : Button = findViewById<Button>(R.id.new_act_btn)
 

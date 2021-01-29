@@ -1,24 +1,25 @@
 package com.example.instaclone
 
+import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
-import com.airbnb.lottie.LottieAnimationView
 
-class AddPostActivity : AppCompatActivity() {
+class UploadPostActivity : AppCompatActivity() {
 
     private val pickImage = 100
     private var imageUri: Uri? = null
@@ -28,18 +29,36 @@ class AddPostActivity : AppCompatActivity() {
 
     private lateinit var imageView: ImageView
 
-
+    private val database = FirebaseDatabase.getInstance().reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_upload_post)
 
         val close: ImageView = findViewById<ImageView>(R.id.close_add_post_btn)
         close.setOnClickListener {
             startActivity(Intent(baseContext, MainActivity::class.java))
         }
 
+        val debug : Button = findViewById<Button>(R.id.databaseBtn)
+        debug.setOnClickListener {
+            val p = HashMap<String,Any>()
+            p["temp"]="temp"
+            database.child("Posts").child(getRandomString(5)).setValue(p)
+            Toast.makeText(this,"Temporary Update to realtime db",Toast.LENGTH_SHORT).show()
+        }
+
+        val captureAnim : LottieAnimationView = findViewById<LottieAnimationView>(R.id.captureAnim)
+        captureAnim.setAnimation("capture.json")
+        captureAnim.playAnimation()
+        captureAnim.loop(true)
+
         val addPictureBtn: Button = findViewById<Button>(R.id.AddPictureBtn)
         imageView = findViewById<ImageView>(R.id.image_post)
+
+
+        addPictureBtn.isClickable = true
+        addPictureBtn.isEnabled = true
 
         addPictureBtn.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -63,6 +82,7 @@ class AddPostActivity : AppCompatActivity() {
             } else {
                 //Upload the image
                 //Functionality to be made
+                captureAnim.loop(false)
                 uploadImagePostToFirebaseStorage(imageUri!!, storage, currentUser,description.text.toString(),addPictureBtn)
 //                val x = getRandomString(2)
             }
@@ -70,11 +90,18 @@ class AddPostActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImagePostToFirebaseStorage(imageUri: Uri, storage: StorageReference, currentUser: FirebaseUser,description : String,addPictureBtn : Button) {
+    private fun uploadImagePostToFirebaseStorage(imageUri: Uri, storage: StorageReference, currentUser: FirebaseUser, description: String, addPictureBtn: Button) {
         val x = getRandomString(28)
         val lottie : LottieAnimationView = findViewById<LottieAnimationView>(R.id.Lottie1)
+
         lottie.setAnimation("297-loading-rainbow.json")
         lottie.bringToFront()
+
+        val postMap = HashMap<String,Any>()
+        postMap["Description"] = description
+        postMap["postId"] = x
+        postMap["publisher"] = currentUser.uid
+        database.child("Posts").child(x).setValue(postMap)
 
         addPictureBtn.isEnabled = false
         addPictureBtn.isClickable = false
@@ -82,18 +109,32 @@ class AddPostActivity : AppCompatActivity() {
         lottie.playAnimation()
         lottie.loop(true)
 
-        storage.child("Posts Images").child(currentUser.uid.toString()).child(x).child("Photo").putFile(imageUri).addOnSuccessListener {
-            storage.child("Posts Images").child(currentUser.uid.toString()).child(x).child("Description").putStream(description.byteInputStream()).addOnSuccessListener {
-                lottie.loop(false)
+        val tempST = storage.child("Posts Images").child(currentUser.uid).child(x)
 
-                addPictureBtn.isClickable = true
-                addPictureBtn.isEnabled = true
+        tempST.child("Photo").putFile(imageUri).addOnSuccessListener {
+            tempST.child("Description").putStream(description.byteInputStream()).addOnSuccessListener {
+//                postMap["postImage"] = storage.child("Posts Images").child(currentUser.uid).child(x).child("Photo").downloadUrl.toString()
+
+//                tempST.child("Photo").downloadUrl.let { task ->
+//                    val temp = task.result.toString()
+//                    postMap["postImage"] = temp
+//                }
+//                val newMap = HashMap<String,Any>()
+//                newMap["postImage"] = tempST.child("Description").downloadUrl.result.toString()
+//                database.child("Posts").child(x).updateChildren(newMap)
+
+//                database.child("Posts").child(x).setValue(postMap)
+
+                lottie.loop(false)
 
                 Toast.makeText(this,"Post Successfully uploaded",Toast.LENGTH_SHORT).show()
                 startActivity(Intent(baseContext,MainActivity::class.java))
+
             }.addOnFailureListener {
                 Toast.makeText(this,"Error, Please try again",Toast.LENGTH_SHORT).show()
             }
+        }.addOnFailureListener {
+            Toast.makeText(this,"Post Upload Failed, Please Try Again",Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -107,7 +148,7 @@ class AddPostActivity : AppCompatActivity() {
 
     }
 
-    fun getRandomString(length: Int): String {
+    private fun getRandomString(length: Int): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..length)
                 .map { allowedChars.random() }

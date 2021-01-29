@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPostActivity">
+    tools:context=".UploadPostActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_add_post"
@@ -44,8 +44,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:lottie_speed="1"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
@@ -62,17 +62,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/captureAnim"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="90dp"
+                android:layout_centerVertical="true"/>
+
             <Button
                 android:id="@+id/AddPictureBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Picture"
                 android:textAllCaps="false"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_toEndOf="@id/captureAnim"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/edittext_signup_rounded"
-                android:layout_margin="5dp"
                 android:textSize="17sp"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </RelativeLayout>
 
@@ -97,13 +105,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/databaseBtn"
+                android:text="Debug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <TextView
+                android:id="@+id/upper"
                 android:text="@string/instaclone_2021"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"/>
+                android:layout_above="@id/lower"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                android:id="@+id/lower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/shantanu_gupta"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"/>
 
         </RelativeLayout>
 

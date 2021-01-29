@@ -7,14 +7,21 @@
     android:background="@drawable/sign_background"
     tools:context=".SignUpActivity">
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/logo"-->
+<!--        android:layout_width="180dp"-->
+<!--        android:layout_height="90dp"-->
+<!--        android:src="@drawable/ic_instagram_logo"-->
+<!--        app:tint="@color/white"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="150dp"/>-->
+
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/logo"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        android:src="@drawable/ic_instagram_logo"
-        app:tint="@color/white"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="110dp"/>
 
     <EditText
         android:id="@+id/fullName_edit_text"

@@ -8,14 +8,21 @@
     tools:context=".SignInActivity"
     >
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/logo"-->
+<!--        android:layout_width="180dp"-->
+<!--        android:layout_height="90dp"-->
+<!--        android:src="@drawable/ic_instagram_logo"-->
+<!--        app:tint="@color/white"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="180dp"/>-->
+
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/logo"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        android:src="@drawable/ic_instagram_logo"
-        app:tint="@color/white"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"/>
+        android:layout_marginTop="150dp"/>
 
     <EditText
         android:id="@+id/email_logIn"
@@ -68,13 +75,27 @@
         android:textAllCaps="false"
         android:textSize="20sp"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/copyright"
         android:background="@drawable/edittext_signup_rounded"
         android:textColor="#000000"
         android:padding="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        />
+        android:layout_marginBottom="30dp" />
 
+    <TextView
+        android:text="InstaClone @ 2021"
+        android:id="@+id/copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/name"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:text="Shantanu Gupta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

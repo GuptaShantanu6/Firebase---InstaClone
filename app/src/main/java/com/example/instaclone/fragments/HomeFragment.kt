@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.example.instaclone.R
 
 class HomeFragment : Fragment() {
@@ -21,6 +22,11 @@ class HomeFragment : Fragment() {
         send.setOnClickListener {
             Toast.makeText(activity,"Chat in Maintaenance",Toast.LENGTH_SHORT).show()
         }
+
+        val anim : LottieAnimationView = view.findViewById<LottieAnimationView>(R.id.homeActivityIcon)
+        anim.setAnimation("mainActivityAnim.json")
+        anim.playAnimation()
+        anim.loop(true)
 
         return view
     }
