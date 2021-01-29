@@ -91,7 +91,7 @@
             android:layout_height="300dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_beach"
-            android:layout_marginStart="50dp"/>
+            android:layout_marginStart="30dp"/>
 
         <EditText
             android:id="@+id/post_description"
