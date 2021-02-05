@@ -40,13 +40,13 @@ class UploadPostActivity : AppCompatActivity() {
             startActivity(Intent(baseContext, MainActivity::class.java))
         }
 
-        val debug : Button = findViewById<Button>(R.id.databaseBtn)
-        debug.setOnClickListener {
-            val p = HashMap<String,Any>()
-            p["temp"]="temp"
-            database.child("Posts").child(getRandomString(5)).setValue(p)
-            Toast.makeText(this,"Temporary Update to realtime db",Toast.LENGTH_SHORT).show()
-        }
+//        val debug : Button = findViewById<Button>(R.id.databaseBtn)
+//        debug.setOnClickListener {
+//            val p = HashMap<String,Any>()
+//            p["temp"]="temp"
+//            database.child("Posts").child(getRandomString(5)).setValue(p)
+//            Toast.makeText(this,"Temporary Update to realtime db",Toast.LENGTH_SHORT).show()
+//        }
 
         val captureAnim : LottieAnimationView = findViewById<LottieAnimationView>(R.id.captureAnim)
         captureAnim.setAnimation("capture.json")
