@@ -45,8 +45,7 @@
             android:id="@+id/post_image_home"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_beach"/>
+            android:layout_marginTop="5dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -123,7 +122,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="7dp"
-            android:textStyle="bold"/>
+            android:textSize="17sp"/>
 
 
     </LinearLayout>

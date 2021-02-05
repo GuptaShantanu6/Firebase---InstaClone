@@ -18,6 +18,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.HashMap
 
 class UploadPostActivity : AppCompatActivity() {
 
@@ -42,10 +46,17 @@ class UploadPostActivity : AppCompatActivity() {
 
 //        val debug : Button = findViewById<Button>(R.id.databaseBtn)
 //        debug.setOnClickListener {
-//            val p = HashMap<String,Any>()
-//            p["temp"]="temp"
-//            database.child("Posts").child(getRandomString(5)).setValue(p)
-//            Toast.makeText(this,"Temporary Update to realtime db",Toast.LENGTH_SHORT).show()
+////            val p = HashMap<String,Any>()
+////            p["temp"]="temp"
+////            database.child("Posts").child(getRandomString(5)).setValue(p)
+////            Toast.makeText(this,"Temporary Update to realtime db",Toast.LENGTH_SHORT).show()
+//            val d = Calendar.getInstance()
+//            val sdfr : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+//            val now = d.time
+//            val dater = sdfr.format(now)
+//            Toast.makeText(this,dater.toString(),Toast.LENGTH_LONG).show()
+//
+//
 //        }
 
         val captureAnim : LottieAnimationView = findViewById<LottieAnimationView>(R.id.captureAnim)
@@ -101,6 +112,7 @@ class UploadPostActivity : AppCompatActivity() {
         postMap["Description"] = description
         postMap["postId"] = x
         postMap["publisher"] = currentUser.uid
+        postMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
         database.child("Posts").child(x).setValue(postMap)
 
         addPictureBtn.isEnabled = false

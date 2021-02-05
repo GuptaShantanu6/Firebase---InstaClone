@@ -1,5 +1,6 @@
 package com.example.instaclone.fragments
 
+import android.content.Intent.getIntent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -36,6 +39,11 @@ class HomeFragment : Fragment() {
             Toast.makeText(activity,"Chat in Maintaenance",Toast.LENGTH_SHORT).show()
         }
 
+        val refresh : ImageView = view.findViewById<ImageView>(R.id.refresh_btn)
+        refresh.setOnClickListener {
+            setValueforHomeRecyclerView()
+        }
+
         val anim : LottieAnimationView = view.findViewById<LottieAnimationView>(R.id.homeActivityIcon)
         anim.setAnimation("mainActivityAnim.json")
         anim.playAnimation()
@@ -45,8 +53,8 @@ class HomeFragment : Fragment() {
         recyclerView?.setHasFixedSize(true)
 
         val linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.reverseLayout = true
-        linearLayoutManager.stackFromEnd = true
+//        linearLayoutManager.reverseLayout = true
+//        linearLayoutManager.stackFromEnd = true
         recyclerView!!.layoutManager = linearLayoutManager
 
         mPost = ArrayList()
@@ -59,7 +67,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setValueforHomeRecyclerView() {
-        val database = FirebaseDatabase.getInstance().reference.child("Posts").addValueEventListener(object : ValueEventListener{
+        val database = FirebaseDatabase.getInstance().reference.child("Posts").orderByChild("uploadTime")
+        database.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 mPost?.clear()
                 for (ss in snapshot.children){
@@ -68,6 +77,7 @@ class HomeFragment : Fragment() {
                         mPost?.add(p)
                     }
                 }
+                mPost?.reverse()
                 postAdapter?.notifyDataSetChanged()
             }
 
