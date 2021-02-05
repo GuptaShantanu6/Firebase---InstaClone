@@ -45,7 +45,6 @@
             android:id="@+id/post_image_home"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:scaleType="centerCrop"
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_beach"/>
 
