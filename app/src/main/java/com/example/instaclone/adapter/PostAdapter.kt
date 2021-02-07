@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.instaclone.Model.Post
 import com.example.instaclone.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -71,6 +72,70 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         }.addOnFailureListener {
             Log.d("Post Value Error","Unable to load post Image")
         }
+        
+//        var check = false
+//        holder.like.setOnClickListener {
+//            if (!check){
+//                check = true
+//                holder.like.setImageResource(R.drawable.ic_heart_filled)
+//            }
+//            else{
+//                check = false
+//                holder.like.setImageResource(R.drawable.ic_heart)
+//            }
+//        }
+        var check = false
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val likeDb = FirebaseDatabase.getInstance().reference
+        likeDb.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child("Like").child(pId).child(currentUser!!.uid).exists()){
+                    holder.like.setImageResource(R.drawable.ic_heart_filled)
+                    check = true
+                    holder.likesView.text = snapshot.child("Like").child(pId).childrenCount.toString() + " Likes"
+                }
+                else{
+                    holder.like.setImageResource(R.drawable.ic_heart)
+                    holder.likesView.text = snapshot.child("Like").child(pId).childrenCount.toString() + " Likes"
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+        holder.like.setOnClickListener {
+            check = if (check){
+                holder.like.setImageResource(R.drawable.ic_heart)
+                likeDb.child("Like").child(pId).child(currentUser!!.uid).removeValue()
+                likeDb.child("Like").child(pId).addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        holder.likesView.text = snapshot.childrenCount.toString() + " Likes"
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+                false
+            } else {
+                holder.like.setImageResource(R.drawable.ic_heart_filled)
+                likeDb.child("Like").child(pId).child(currentUser!!.uid).setValue(true)
+                likeDb.child("Like").child(pId).addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        holder.likesView.text = snapshot.childrenCount.toString() + " Likes"
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+                true
+            }
+        }
+
 
     }
 
@@ -79,10 +144,12 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
     }
 
     class ViewHolder(@NonNull itemView : View) : RecyclerView.ViewHolder(itemView){
-        var profileImageView : CircleImageView = itemView.findViewById<CircleImageView>(R.id.user_profile_image_search)
-        var usernameTextView : TextView = itemView.findViewById<TextView>(R.id.user_name_search)
-        var postImageView : ImageView = itemView.findViewById<ImageView>(R.id.post_image_home)
-        var postDescriptionTextView : TextView = itemView.findViewById<TextView>(R.id.post_description_home)
+        var profileImageView : CircleImageView = itemView.findViewById(R.id.user_profile_image_search)
+        var usernameTextView : TextView = itemView.findViewById(R.id.user_name_search)
+        var postImageView : ImageView = itemView.findViewById(R.id.post_image_home)
+        var postDescriptionTextView : TextView = itemView.findViewById(R.id.post_description_home)
+        var like : ImageView = itemView.findViewById(R.id.post_image_likebtn)
+        var likesView : TextView = itemView.findViewById(R.id.likes)
     }
 
     fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize(Locale.ROOT) }.trimEnd()
