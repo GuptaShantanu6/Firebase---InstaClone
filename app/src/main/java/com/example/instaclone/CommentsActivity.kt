@@ -70,6 +70,7 @@ class CommentsActivity : AppCompatActivity() {
                 val db = FirebaseDatabase.getInstance().reference
 //                db.child("Comments").child(postID).child(currentUser!!.uid).child("commentDescription").child()
                 db.child("Comments").child(postID).child(currentUser!!.uid).child(tempId).child("commentDescription").setValue(typedComment.text.toString())
+                db.child("Comments").child(postID).child(currentUser.uid).child(tempId).child("commentUserId").setValue(currentUser.uid)
                 var x = ""
                 db.child("Users").addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
