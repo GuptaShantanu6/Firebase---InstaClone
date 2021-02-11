@@ -1,17 +1,24 @@
 package com.example.instaclone.adapter
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.core.text.bold
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.instaclone.CommentsActivity
 import com.example.instaclone.Model.Post
 import com.example.instaclone.R
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +26,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.core.utilities.Utilities
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -30,15 +38,10 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         return ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.post_layout,parent,false))
     }
 
-    override fun onBindViewHolder(holder: PostAdapter.ViewHolder, position: Int) {
+    @SuppressLint("CommitPrefEdits")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = mPost[position]
-//        holder.usernameTextView.text = post.getUserName()
-//        holder.postDescriptionTextView.text = post.getDescription()
-//        Glide.with(holder.itemView.context).load(post.getProfileID()).into(holder.profileImageView)
-//        Glide.with(holder.itemView.context).load(post.getImageID()).into(holder.postImageView)
         val pub = post.getpublisher()
-//        holder.usernameTextView.text = pub
-//        holder.postDescriptionTextView.text = post.getDescription()
         val pId = post.getpostId()
         val storage = FirebaseStorage.getInstance().reference
 
@@ -72,18 +75,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         }.addOnFailureListener {
             Log.d("Post Value Error","Unable to load post Image")
         }
-        
-//        var check = false
-//        holder.like.setOnClickListener {
-//            if (!check){
-//                check = true
-//                holder.like.setImageResource(R.drawable.ic_heart_filled)
-//            }
-//            else{
-//                check = false
-//                holder.like.setImageResource(R.drawable.ic_heart)
-//            }
-//        }
+
         var check = false
         val currentUser = FirebaseAuth.getInstance().currentUser
         val likeDb = FirebaseDatabase.getInstance().reference
@@ -92,10 +84,12 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 if (snapshot.child("Like").child(pId).child(currentUser!!.uid).exists()){
                     holder.like.setImageResource(R.drawable.ic_heart_filled)
                     check = true
+                    @SuppressLint("SetTextI18n")
                     holder.likesView.text = snapshot.child("Like").child(pId).childrenCount.toString() + " Likes"
                 }
                 else{
                     holder.like.setImageResource(R.drawable.ic_heart)
+                    @SuppressLint("SetTextI18n")
                     holder.likesView.text = snapshot.child("Like").child(pId).childrenCount.toString() + " Likes"
                 }
             }
@@ -110,6 +104,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 likeDb.child("Like").child(pId).child(currentUser!!.uid).removeValue()
                 likeDb.child("Like").child(pId).addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        @SuppressLint("SetTextI18n")
                         holder.likesView.text = snapshot.childrenCount.toString() + " Likes"
                     }
 
@@ -124,6 +119,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 likeDb.child("Like").child(pId).child(currentUser!!.uid).setValue(true)
                 likeDb.child("Like").child(pId).addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        @SuppressLint("SetTextI18n")
                         holder.likesView.text = snapshot.childrenCount.toString() + " Likes"
                     }
 
@@ -136,7 +132,17 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             }
         }
 
+        holder.commentsView.setOnClickListener {
+            val whichPost = mContext.getSharedPreferences("whichIDs",Context.MODE_PRIVATE).edit()
+            whichPost.apply{
+                putString("postID",pId)
+                putString("postPublisher",pub)
+                apply()
+            }
 
+            val intent = Intent(mContext,CommentsActivity::class.java)
+            mContext.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -150,8 +156,11 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         var postDescriptionTextView : TextView = itemView.findViewById(R.id.post_description_home)
         var like : ImageView = itemView.findViewById(R.id.post_image_likebtn)
         var likesView : TextView = itemView.findViewById(R.id.likes)
+        var commentsView : TextView = itemView.findViewById(R.id.comments)
+        val commentBtn : ImageView = itemView.findViewById(R.id.post_image_comment_btn)
     }
 
     fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize(Locale.ROOT) }.trimEnd()
 
 }
+

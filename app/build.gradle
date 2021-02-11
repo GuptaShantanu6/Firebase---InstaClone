@@ -67,6 +67,9 @@ dependencies {
     //Lottie animation library
     implementation 'com.airbnb.android:lottie:3.6.0'
 
+    implementation 'com.melnykov:floatingactionbutton:1.3.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

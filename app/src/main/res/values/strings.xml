@@ -24,4 +24,6 @@
     <string name="instaclone_2021">InstaClone @ 2021</string>
     <string name="shantanu_gupta">Shantanu Gupta</string>
     <string name="user_name">user name</string>
+    <string name="comments">Comments</string>
+    <string name="loading">Loading...</string>
 </resources>

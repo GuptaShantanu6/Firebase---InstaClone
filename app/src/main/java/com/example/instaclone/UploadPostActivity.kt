@@ -1,5 +1,6 @@
 package com.example.instaclone
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -101,6 +102,7 @@ class UploadPostActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun uploadImagePostToFirebaseStorage(imageUri: Uri, storage: StorageReference, currentUser: FirebaseUser, description: String, addPictureBtn: Button) {
         val x = getRandomString(28)
         val lottie : LottieAnimationView = findViewById<LottieAnimationView>(R.id.Lottie1)

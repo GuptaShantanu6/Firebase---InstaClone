@@ -62,8 +62,6 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             val pref = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
-//            pref.putString("profileId",user.getUID())
-//            pref.apply()
             pref.apply{
                 putString("profileID",user.getUID())
                 apply()
