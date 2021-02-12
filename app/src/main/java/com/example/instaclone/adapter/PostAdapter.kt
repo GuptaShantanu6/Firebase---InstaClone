@@ -38,7 +38,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         return ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.post_layout,parent,false))
     }
 
-    @SuppressLint("CommitPrefEdits")
+    @SuppressLint("CommitPrefEdits", "SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = mPost[position]
         val pub = post.getpublisher()
@@ -143,6 +143,25 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             val intent = Intent(mContext,CommentsActivity::class.java)
             mContext.startActivity(intent)
         }
+
+//        var totalComments = 0
+//        val commentDb = likeDb.child("Comments").child(pId)
+//        commentDb.addValueEventListener(object : ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (temp in snapshot.children){
+//                    totalComments += temp.childrenCount.toInt()
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//        })
+//
+//        holder.commentsView.text = "$totalComments Comments"
+        holder.commentsView.text = "View All Comments"
+
     }
 
     override fun getItemCount(): Int {
