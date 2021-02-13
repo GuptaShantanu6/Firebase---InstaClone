@@ -3,6 +3,8 @@ package com.example.instaclone
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,13 +52,15 @@ class CommentsActivity : AppCompatActivity() {
         submitBtn.isClickable = true
 
         val commentAnim : LottieAnimationView = findViewById(R.id.commentSubmitAnim)
-        commentAnim.setAnimation("297-loading-rainbow.json")
+        commentAnim.setAnimation("629-empty-box.json")
 
         val whichPost = baseContext.getSharedPreferences("whichIDs",Context.MODE_PRIVATE)
         val postID = whichPost.getString("postID","none").toString()
         val postPublisher = whichPost.getString("postPublisher","none").toString()
 
-        initiator2()
+        Log.d("postId",postID)
+
+        initiator2(postID, commentAnim)
 
         submitBtn.setOnClickListener {
             val tempId = getRandomString(5)
@@ -69,18 +73,22 @@ class CommentsActivity : AppCompatActivity() {
                 submitBtn.isClickable = false
                 val db = FirebaseDatabase.getInstance().reference
 //                db.child("Comments").child(postID).child(currentUser!!.uid).child("commentDescription").child()
-                db.child("Comments").child(postID).child(currentUser!!.uid).child(tempId).child("commentDescription").setValue(typedComment.text.toString())
-                db.child("Comments").child(postID).child(currentUser.uid).child(tempId).child("commentUserId").setValue(currentUser.uid)
+
+//                db.child("Comments").child(postID).child(currentUser!!.uid).child(tempId).child("commentDescription").setValue(typedComment.text.toString())
+//                db.child("Comments").child(postID).child(currentUser.uid).child(tempId).child("commentUserId").setValue(currentUser.uid)
+
+                db.child("Comments").child(postID).child(tempId).child("commentDescription").setValue(typedComment.text.toString())
+                db.child("Comments").child(postID).child(tempId).child("commentUserId").setValue(currentUser!!.uid)
                 var x = ""
                 db.child("Users").addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         x = snapshot.child(currentUser.uid).child("username").value.toString()
-                        db.child("Comments").child(postID).child(currentUser.uid).child(tempId).child("userName").setValue(x).addOnCompleteListener {
+                        db.child("Comments").child(postID).child(tempId).child("userName").setValue(x).addOnCompleteListener {
 //                            initiator2(postID, commentAnim,submitBtn)
 //                            commentAnim.loop(false)
                             submitBtn.isClickable = true
                             Toast.makeText(this@CommentsActivity,"Comment posted, please exit to refresh",Toast.LENGTH_SHORT).show()
-                            initiator2()
+                            initiator2(postID,commentAnim)
                         }
 
                     }
@@ -97,23 +105,42 @@ class CommentsActivity : AppCompatActivity() {
 
     }
 
-    private fun initiator2() {
+    private fun initiator2(postID: String, commentAnim: LottieAnimationView) {
         val db = FirebaseDatabase.getInstance().reference
         db.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.child("Comments").exists()){
-                    for (ss in snapshot.child("Comments").children){
-                        for (cccc in ss.children){
-                            for (xxxx in cccc.children){
-                                val c = xxxx.getValue(Comment::class.java)
-                                if (c != null){
-                                    mComment?.add(c)
-                                }
-                            }
+//                if (snapshot.child("Comments").exists()){
+//                    for (ss in snapshot.child("Comments").children){
+//                        for (cccc in ss.children){
+//                            for (xxxx in cccc.children){
+//                                val c = xxxx.getValue(Comment::class.java)
+//                                if (c != null){
+//                                    mComment?.add(c)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                if (snapshot.child("Comments").child(postID).exists()){
+//                    for (ss in snapshot.child("Comments").child(postID).children)
+//                        for (xx in ss.children)
+//                }
+//                commentAdapter?.notifyDataSetChanged()
+                if (snapshot.child("Comments").child(postID).exists()){
+                    for (xx in snapshot.child("Comments").child(postID).children){
+                        val c = xx.getValue(Comment::class.java)
+                        if (c != null){
+                            mComment?.add(c)
                         }
                     }
                 }
-//                commentAdapter?.notifyDataSetChanged()
+                if (mComment?.isEmpty() == true){
+                    commentAnim.playAnimation()
+                    commentAnim.loop(true)
+                }
+                else {
+                    commentAnim.visibility = View.GONE
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

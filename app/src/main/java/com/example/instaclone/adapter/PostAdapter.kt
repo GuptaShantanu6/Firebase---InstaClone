@@ -48,7 +48,6 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         FirebaseDatabase.getInstance().reference.child("Users").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 holder.usernameTextView.text = snapshot.child(pub).child("username").value.toString()
-//                holder.postDescriptionTextView.text = holder.usernameTextView.text as String + " " + post.getDescription()
                 val s = SpannableStringBuilder().bold { append(holder.usernameTextView.text.toString()) }.append(" ").append(post.getDescription())
                 holder.postDescriptionTextView.text = s
             }
@@ -143,23 +142,6 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             val intent = Intent(mContext,CommentsActivity::class.java)
             mContext.startActivity(intent)
         }
-
-//        var totalComments = 0
-//        val commentDb = likeDb.child("Comments").child(pId)
-//        commentDb.addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (temp in snapshot.children){
-//                    totalComments += temp.childrenCount.toInt()
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//
-//        })
-//
-//        holder.commentsView.text = "$totalComments Comments"
         holder.commentsView.text = "View All Comments"
 
     }

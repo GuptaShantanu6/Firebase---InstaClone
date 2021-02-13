@@ -26,4 +26,5 @@
     <string name="user_name">user name</string>
     <string name="comments">Comments</string>
     <string name="loading">Loading...</string>
+    <string name="enter_comment">Enter Comment</string>
 </resources>

@@ -115,6 +115,7 @@ class UploadPostActivity : AppCompatActivity() {
         postMap["postId"] = x
         postMap["publisher"] = currentUser.uid
         postMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+        postMap["postType"] = "image"
         database.child("Posts").child(x).setValue(postMap)
 
         addPictureBtn.isEnabled = false

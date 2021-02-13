@@ -30,16 +30,17 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class UserAdapter (private var mContext : Context, private var mUser : List<User>, private var isFragment : Boolean = false)
     : RecyclerView.Adapter<UserAdapter.ViewHolder>()
 {
+
     private var firebaseUser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val storage = FirebaseStorage.getInstance().reference
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ViewHolder {
-//        val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false)
-//        return UserAdapter.ViewHolder(view)
 
         return ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false))
     }
@@ -48,7 +49,6 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
         val user = mUser[position]
         holder.usernameTextView.text = user.getUserName()
         holder.fullnameTextView.text = user.getFullName().capitalizeFirstLetter()
-//        Picasso.get().load(user.getImage()).placeholder(R.drawable.ic_man).into(holder.profileImageSearchView)
         storage.child("Default Images").child(user.getUID()).downloadUrl.addOnSuccessListener {
             val x = it.toString()
             Glide.with(mContext)
@@ -72,8 +72,6 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                 context.startActivity(intent)
             }
 
-//            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fragment_container,ProfileFragment()).commit()
         })
 
         if (user.getUID() == firebaseUser?.uid){
@@ -95,7 +93,12 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                                                     .child("Followers").child(it.toString())
                                                     .setValue(true).addOnCompleteListener { task ->
                                                         if (task.isSuccessful) {
-
+                                                            val notMap = HashMap<String,Any>()
+                                                            notMap["status"] = true
+                                                            notMap["otherUser"] = user.getUserName()
+                                                            notMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+                                                            FirebaseDatabase.getInstance().reference
+                                                                    .child("Notifications").child(firebaseUser!!.uid).child(getRandomString(10)).setValue(notMap)
                                                         }
                                                     }
 
@@ -116,7 +119,11 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                                                     .child("Followers").child(it.toString())
                                                     .removeValue().addOnCompleteListener {
                                                         if (task.isSuccessful) {
-
+                                                            val notMap = HashMap<String,Any>()
+                                                            notMap["status"] = false
+                                                            notMap["otherUser"] = user.getUserName()
+                                                            notMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+                                                            FirebaseDatabase.getInstance().reference.child("Notifications").child(firebaseUser!!.uid).child(getRandomString(10)).setValue(notMap)
                                                         }
                                                     }
                                         }
@@ -127,10 +134,6 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
             }
         }
 
-//        val message : String = user.getFullName().capitalizeFirstLetter()
-//        Toast.makeText(mContext,"Clicked in $message",Toast.LENGTH_SHORT).show()
-
-
     }
 
 
@@ -139,15 +142,15 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
     }
 
     class ViewHolder(@NonNull itemView : View ) : RecyclerView.ViewHolder(itemView){
-        var usernameTextView : TextView = itemView.findViewById<TextView>(R.id.user_name_search)
-        var fullnameTextView : TextView = itemView.findViewById<TextView>(R.id.user_full_name_search)
-        var profileImageSearchView : ImageView = itemView.findViewById<ImageView>(R.id.user_profile_image_search)
-        var followButton : Button = itemView.findViewById<Button>(R.id.following_btn)
+        var usernameTextView : TextView = itemView.findViewById(R.id.user_name_search)
+        var fullnameTextView : TextView = itemView.findViewById(R.id.user_full_name_search)
+        var profileImageSearchView : ImageView = itemView.findViewById(R.id.user_profile_image_search)
+        var followButton : Button = itemView.findViewById(R.id.following_btn)
 
 
     }
 
-    fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
+    private fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize(Locale.ROOT) }.trimEnd()
 
     private fun checkFollowingStatus(uid: String, followButton: Button) {
         val followingRef = firebaseUser?.uid.let {
@@ -171,6 +174,13 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
 
             }
         })
+    }
+
+    fun getRandomString(length: Int): String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+                .map { allowedChars.random() }
+                .joinToString("")
     }
 
 }
