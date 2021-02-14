@@ -1,27 +1,28 @@
 package com.example.instaclone.Model
 
+import java.text.SimpleDateFormat
+
 class NotificationC() {
-    private var userName : String = ""
-    private var type : String = ""
-    private var userId : String = ""
-    private var postType : String = ""
+    private var otherUser : String = ""
+    private var status : String = ""
+    private var uploadTime : String = ""
 
-    constructor(userName : String, type: String, userId : String) : this(){
-        this.userName = userName
-        this.type = type
-        this.userId = userId
+    constructor(otherUser : String, status: String, uploadTime : String) : this(){
+        this.otherUser = otherUser
+        this.status = status
+        this.uploadTime = uploadTime
     }
 
-    fun getUserName() : String{
-        return userName
+    fun getOtherUser() : String {
+        return otherUser
     }
 
-    fun getType() : String {
-        return type
+    fun getStatus() : String {
+        return status
     }
 
-    fun getUserId() : String {
-        return userId
+    fun getUploadTime() : String {
+        return uploadTime
     }
 
 }

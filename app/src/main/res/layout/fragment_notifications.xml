@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".fragments.NotificationsFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/emptyNotificationAnim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_notifications"
         android:layout_width="match_parent"
@@ -38,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar_layout_notifications"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        tools:listitem="@layout/notification_layout"/>
 
 </RelativeLayout>

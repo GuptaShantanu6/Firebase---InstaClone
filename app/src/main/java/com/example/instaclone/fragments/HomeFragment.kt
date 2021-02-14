@@ -131,7 +131,6 @@ class HomeFragment : Fragment() {
                     }
 //                    Log.d("debug", count.toString())
                     if (flag && i!=currentUser!!.uid){
-                        Log.d("success","Recycler view is not empty")
                         val p = ss.getValue(Post::class.java)
                         if (p != null){
                             mPost?.add(p)

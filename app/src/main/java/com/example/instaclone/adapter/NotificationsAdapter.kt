@@ -12,30 +12,40 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.instaclone.Model.NotificationC
 import com.example.instaclone.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 
 class NotificationsAdapter(private var mContext : Context, private var isFragment : Boolean = true, private var mNotification : List<NotificationC>)
     :RecyclerView.Adapter<NotificationsAdapter.ViewHolder>(){
+
+    val currentUser = FirebaseAuth.getInstance().currentUser
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsAdapter.ViewHolder {
         return ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.notification_layout,parent,false))
     }
 
     override fun onBindViewHolder(holder: NotificationsAdapter.ViewHolder, position: Int) {
         val notification = mNotification[position]
-        val notiType = notification.getType()
-        if (notiType == "Other"){
-            holder.notificationText.text = SpannableStringBuilder().bold { append(notification.getUserName()) }.append(" started following you")
-        }
-        else{
-            holder.notificationText.text = SpannableStringBuilder().append("You started following ").bold { notification.getUserName() }
+        when {
+            notification.getStatus() == "youTrue" -> {
+                holder.notificationText.text = SpannableStringBuilder().append("You started following ").bold { append(notification.getOtherUser()) }
+            }
+            notification.getStatus() == "youFalse" -> {
+                holder.notificationText.text = SpannableStringBuilder().append("You unfollowed ").bold { append(notification.getOtherUser()) }
+            }
+            notification.getStatus() == "otherTrue" -> {
+                holder.notificationText.text = SpannableStringBuilder().bold { append(notification.getOtherUser()) }.append(" started following you")
+            }
+            notification.getStatus() == "otherFalse" -> {
+                holder.notificationText.text = SpannableStringBuilder().bold { append(notification.getOtherUser()) }.append(" unfollowed you")
+            }
         }
 
-        val storage = FirebaseStorage.getInstance().reference.child("Default Images")
-        storage.child(notification.getUserId()).downloadUrl.addOnSuccessListener {
-            val x = it.toString()
-            Glide.with(holder.itemView.context).load(x).into(holder.userNotiImag)
-        }
     }
 
     override fun getItemCount(): Int {
