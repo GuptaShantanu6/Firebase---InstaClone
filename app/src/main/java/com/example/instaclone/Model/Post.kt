@@ -8,9 +8,9 @@ class Post() {
     private var postId : String = ""
     private var publisher : String = ""
     private var uploadTime : String = ""
-    private var postType : String = ""
+    private var postType : Int = 0
 
-    constructor(Description : String, postId : String, publisher : String, uploadTime : String, postType : String) : this(){
+    constructor(Description : String, postId : String, publisher : String, uploadTime : String, postType : Int) : this(){
         this.Description = Description
         this.postId = postId
         this.publisher = publisher
@@ -34,7 +34,7 @@ class Post() {
         return  uploadTime
     }
 
-    fun getPostType() : String{
+    fun getPostType() : Int{
         return postType
     }
 

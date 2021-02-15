@@ -97,8 +97,11 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                                                             notMap["status"] = "youTrue"
                                                             notMap["otherUser"] = user.getUserName()
                                                             notMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+                                                            notMap["userId"] = user.getUID()
                                                             FirebaseDatabase.getInstance().reference
-                                                                    .child("Notifications").child(firebaseUser!!.uid).child(getRandomString(5)).setValue(notMap)
+                                                                    .child("Notifications")
+                                                                    .child(firebaseUser!!.uid)
+                                                                    .child(getRandomString(5)).setValue(notMap)
 
                                                             val notMap2 = HashMap<String,Any>()
                                                             notMap2["status"] = "otherTrue"
@@ -109,8 +112,11 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                                                                     x = snapshot.child(firebaseUser!!.uid).child("username").value.toString()
                                                                     notMap2["otherUser"] = x
                                                                     notMap2["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+                                                                    notMap2["userId"] = user.getUID()
                                                                     FirebaseDatabase.getInstance().reference
-                                                                            .child("Notifications").child(user.getUID()).child(getRandomString(5)).setValue(notMap2)
+                                                                            .child("Notifications")
+                                                                            .child(user.getUID())
+                                                                            .child(getRandomString(5)).setValue(notMap2)
 
                                                                 }
 
@@ -145,15 +151,21 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
                                                             notMap["status"] = "youFalse"
                                                             notMap["otherUser"] = user.getUserName()
                                                             notMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+                                                            notMap["userId"] = user.getUID()
                                                             FirebaseDatabase.getInstance().reference
-                                                                    .child("Notifications").child(firebaseUser!!.uid).child(getRandomString(5)).setValue(notMap)
+                                                                    .child("Notifications")
+                                                                    .child(firebaseUser!!.uid)
+                                                                    .child(getRandomString(5)).setValue(notMap)
 
                                                             val notMap2 = HashMap<String,Any>()
                                                             notMap2["status"] = "otherFalse"
                                                             notMap2["otherUser"] = user.getUserName()
                                                             notMap2["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
+                                                            notMap2["userId"] = user.getUID()
                                                             FirebaseDatabase.getInstance().reference
-                                                                    .child("Notifications").child(user.getUID()).child(getRandomString(5)).setValue(notMap2)
+                                                                    .child("Notifications")
+                                                                    .child(user.getUID())
+                                                                    .child(getRandomString(5)).setValue(notMap2)
                                                         }
                                                     }
                                         }

@@ -27,4 +27,6 @@
     <string name="comments">Comments</string>
     <string name="loading">Loading...</string>
     <string name="enter_comment">Enter Comment</string>
+    <string name="add_post">Add Post</string>
+    <string name="view_all_comments">View All Comments</string>
 </resources>

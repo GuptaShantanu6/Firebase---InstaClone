@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UploadPostActivity">
+    tools:context=".UploadVideoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_add_post"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/close_add_post_btn"
+                    android:id="@+id/close_add_video_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentStart="true"
@@ -70,10 +70,10 @@
                 android:layout_centerVertical="true"/>
 
             <Button
-                android:id="@+id/AddPictureBtn"
+                android:id="@+id/addVideoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_post"
+                android:text="Add Video"
                 android:textAllCaps="false"
                 android:layout_centerInParent="true"
                 android:layout_toEndOf="@id/captureAnim"
@@ -84,8 +84,29 @@
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/image_post"
+<!--        <FrameLayout-->
+<!--            android:layout_marginStart="30dp"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp">-->
+
+<!--            <VideoView-->
+<!--                android:id="@+id/video_post"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="300dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                android:src="@drawable/ic_beach"-->
+<!--                android:layout_marginStart="30dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/playBtn"-->
+<!--                android:src="@drawable/ic_baseline_play_arrow_24"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+<!--        </FrameLayout>-->
+
+        <VideoView
+            android:id="@+id/video_post"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitCenter"
@@ -100,9 +121,17 @@
             android:layout_margin="10dp"
             android:maxLines="8" />
 
+        <ImageView
+            android:id="@+id/playBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_baseline_play_arrow_24"
+            android:layout_marginStart="150dp"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <TextView
                 android:id="@+id/upper"

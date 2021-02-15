@@ -67,6 +67,9 @@ class HomeFragment : Fragment() {
             Toast.makeText(activity,"Refreshed",Toast.LENGTH_SHORT).show()
         }
 
+        recyclerView!!.smoothScrollBy(0,1)
+        recyclerView!!.smoothScrollBy(0,-1)
+
 
 //        checkforEmpty(view,postAdapter)
 

@@ -2,6 +2,7 @@ package com.example.instaclone
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -60,14 +59,13 @@ class UploadPostActivity : AppCompatActivity() {
 //
 //        }
 
-        val captureAnim : LottieAnimationView = findViewById<LottieAnimationView>(R.id.captureAnim)
+        val captureAnim : LottieAnimationView = findViewById(R.id.captureAnim)
         captureAnim.setAnimation("capture.json")
         captureAnim.playAnimation()
         captureAnim.loop(true)
 
-        val addPictureBtn: Button = findViewById<Button>(R.id.AddPictureBtn)
-        imageView = findViewById<ImageView>(R.id.image_post)
-
+        val addPictureBtn: Button = findViewById(R.id.AddPictureBtn)
+        imageView = findViewById(R.id.image_post)
 
         addPictureBtn.isClickable = true
         addPictureBtn.isEnabled = true
@@ -75,6 +73,19 @@ class UploadPostActivity : AppCompatActivity() {
         addPictureBtn.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
+//            val builder = AlertDialog.Builder(this)
+//            builder.setTitle("Type of Post")
+//            builder.setPositiveButton("Image"){ _: DialogInterface, _: Int ->
+//                Toast.makeText(this,"clicked on image",Toast.LENGTH_SHORT).show()
+//            }
+//            builder.setNegativeButton("Video"){ _: DialogInterface, _: Int ->
+//                Toast.makeText(this,"clicked on video",Toast.LENGTH_SHORT).show()
+//                val gallery = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(gallery,select_video)
+//            }
+//            val alertDialog = builder.create()
+//            alertDialog.setCancelable(false)
+//            alertDialog.show()
         }
 
         val description: TextView = findViewById<TextView>(R.id.post_description)
@@ -105,7 +116,7 @@ class UploadPostActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     private fun uploadImagePostToFirebaseStorage(imageUri: Uri, storage: StorageReference, currentUser: FirebaseUser, description: String, addPictureBtn: Button) {
         val x = getRandomString(28)
-        val lottie : LottieAnimationView = findViewById<LottieAnimationView>(R.id.Lottie1)
+        val lottie : LottieAnimationView = findViewById(R.id.Lottie1)
 
         lottie.setAnimation("297-loading-rainbow.json")
         lottie.bringToFront()
@@ -115,7 +126,7 @@ class UploadPostActivity : AppCompatActivity() {
         postMap["postId"] = x
         postMap["publisher"] = currentUser.uid
         postMap["uploadTime"] = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().time).toString()
-        postMap["postType"] = "image"
+        postMap["postType"] = 1
         database.child("Posts").child(x).setValue(postMap)
 
         addPictureBtn.isEnabled = false
@@ -175,5 +186,9 @@ class UploadPostActivity : AppCompatActivity() {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 }

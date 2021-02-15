@@ -2,6 +2,7 @@ package com.example.instaclone.adapter
 
 import android.content.Context
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,14 @@ class NotificationsAdapter(private var mContext : Context, private var isFragmen
             notification.getStatus() == "otherFalse" -> {
                 holder.notificationText.text = SpannableStringBuilder().bold { append(notification.getOtherUser()) }.append(" unfollowed you")
             }
+        }
+
+        val storage = FirebaseStorage.getInstance().reference.child("Default Images")
+        storage.child(notification.getUserId()).downloadUrl.addOnSuccessListener {
+            val x = it.toString()
+            Glide.with(holder.itemView.context).load(x).into(holder.userNotiImag)
+        }.addOnFailureListener {
+            Log.d("notifications error: ","failed to load profile image into notification itemHolder")
         }
 
     }
