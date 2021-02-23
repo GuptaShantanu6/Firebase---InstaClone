@@ -35,7 +35,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class UserAdapter (private var mContext : Context, private var mUser : List<User>, private var isFragment : Boolean = false)
-    : RecyclerView.Adapter<UserAdapter.ViewHolder>()
+    : RecyclerView.Adapter<ViewHolder>()
 {
 
     private var firebaseUser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
@@ -45,7 +45,7 @@ class UserAdapter (private var mContext : Context, private var mUser : List<User
         return ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.user_item_layout,parent,false))
     }
 
-    override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = mUser[position]
         holder.usernameTextView.text = user.getUserName()
         holder.fullnameTextView.text = user.getFullName().capitalizeFirstLetter()

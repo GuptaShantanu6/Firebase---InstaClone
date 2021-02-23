@@ -41,12 +41,32 @@
 
         </LinearLayout>
 
-        <VideoView
-            android:id="@+id/post_video_home"
-            android:layout_width="350dp"
-            android:layout_height="220dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="30dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mcButton"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic___dots"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+            <VideoView
+                android:id="@+id/post_video_home"
+                android:layout_width="350dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"/>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -71,14 +91,29 @@
                 android:padding="3dp"/>
 
             <ImageView
+                android:id="@+id/play_btn"
+                android:src="@drawable/ic_pause"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="180dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <ImageView
                 android:id="@+id/post_image_save_btn"
                 android:layout_width="40dp"
                 android:layout_height="39dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="40dp"
                 android:src="@drawable/ic_save_file_option"
                 android:padding="5dp" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/videoAnimLoading"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"/>
 
         </RelativeLayout>
 

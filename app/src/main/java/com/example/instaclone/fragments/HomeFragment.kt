@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class HomeFragment : Fragment() {
+class   HomeFragment : Fragment() {
 
     private var recyclerView : RecyclerView? = null
     private var postAdapter : PostAdapter? = null
