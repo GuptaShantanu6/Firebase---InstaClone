@@ -4,17 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.Settings.Global.putString
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.core.text.bold
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
@@ -28,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
-import java.sql.Time
 
 class PostAdapter(private var mContext: Context, private var isFragment: Boolean = true, private var mPost: List<Post>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>()
@@ -211,7 +207,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 xx.setVolume(0f,0f)
             }
 
-//            mediaController.visibility = View.GONE
+            mediaController.visibility = View.GONE
 
 //            mcButton.setOnClickListener {
 //                mediaController.show()
@@ -223,14 +219,17 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 if (videoView.isPlaying){
                     videoView.pause()
                     playBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
-                    Toast.makeText(itemView.context,seekBar.progress.toFloat().toString(),Toast.LENGTH_SHORT).show()
-
+                    val tm : String = getVideoTime(videoView.currentPosition)
+                    Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
                 }
                 else{
                     videoView.start()
                     playBtn.setImageResource(R.drawable.ic_pause)
                 }
             }
+
+
+
 
 
         }
@@ -240,6 +239,11 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             return (1..length)
                     .map { allowedChars.random() }
                     .joinToString("")
+        }
+
+        private fun getVideoTime(ms: Int) : String{
+            val temp = ms/1000
+            return SpannableStringBuilder().append((temp/3600).toString()+":"+((temp%360)/60)+":"+((temp%3600)%60)).toString()
         }
 
     }
