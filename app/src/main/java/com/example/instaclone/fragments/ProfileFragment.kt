@@ -2,6 +2,7 @@ package com.example.instaclone.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.LightingColorFilter
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.instaclone.AccountSettingsActivity
+import com.example.instaclone.Model.Post
 import com.example.instaclone.R
+import com.example.instaclone.adapter.PostAdapterForProfile
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -32,6 +37,10 @@ class ProfileFragment : Fragment() {
 //    val total_following : TextView? = view?.findViewById<TextView>(R.id.total_following)
     private val storage = FirebaseStorage.getInstance().reference
 
+    private var recyclerView : RecyclerView? = null
+    private var postProfileAdapter : PostAdapterForProfile? = null
+    private var mPost : MutableList<Post>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +59,7 @@ class ProfileFragment : Fragment() {
             this.profileId = pref.getString("profileId","none").toString()
         }
 
-        var firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 
 //        editButton.text = "Edit Profile"
 
@@ -83,8 +92,7 @@ class ProfileFragment : Fragment() {
         val imagesGrid : ImageButton = view.findViewById<ImageButton>(R.id.images_grid_view_button)
         val imagesSave : ImageButton = view.findViewById<ImageButton>(R.id.images_save_button)
 
-//        total_followers = view.findViewById<TextView>(R.id.total_followers)
-//        total_following = view.findViewById<TextView>(R.id.total_following)
+
 
 
         val usernameUpdated : TextView = view.findViewById<TextView>(R.id.usernameText)
@@ -125,7 +133,48 @@ class ProfileFragment : Fragment() {
         changeUserNameAndFullNameAndBio(usernameUpdated,firebaseUser,fullnameUpdated,bioUpdated)
         checkForProfileImage(firebaseUser,profileImage,profileImage)
 
+
+        recyclerView = view.findViewById(R.id.profileRecyclerView)
+        recyclerView?.setHasFixedSize(true)
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        recyclerView!!.layoutManager = linearLayoutManager
+
+        mPost = ArrayList()
+        postProfileAdapter = context?.let { PostAdapterForProfile(it,true,mPost as ArrayList<Post>) }
+        recyclerView!!.adapter = postProfileAdapter
+
+        initiatorForProfilePosts()
+
+
+
         return view
+    }
+
+    private fun initiatorForProfilePosts() {
+        val db = FirebaseDatabase.getInstance().reference.child("Posts").orderByChild("uploadTime")
+        db.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                mPost?.clear()
+                for (ss in snapshot.children){
+                    val i = ss.child("publisher").value.toString()
+                    if (i == FirebaseAuth.getInstance().uid.toString()){
+                        val p = ss.getValue(Post::class.java)
+                        if (p != null){
+                            mPost?.add(p)
+                        }
+                    }
+                }
+                mPost?.reverse()
+                postProfileAdapter?.notifyDataSetChanged()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     private fun checkForProfileImage(firebaseUser: FirebaseUser, profileImage: CircleImageView, tempImage: ImageView) {

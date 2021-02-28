@@ -204,6 +204,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 anim.loop(false)
                 anim.visibility = View.GONE
                 playBtn.visibility = View.VISIBLE
+                xx.isLooping = true
                 xx.setVolume(0f,0f)
             }
 
@@ -213,14 +214,18 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
 //                mediaController.show()
 //            }
 
-            val topContainer = itemView.context.resources.getIdentifier("mediacontroller_progress","id","android")
-            val seekBar : SeekBar = mediaController.findViewById(topContainer)
             playBtn.setOnClickListener {
                 if (videoView.isPlaying){
                     videoView.pause()
                     playBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
-                    val tm : String = getVideoTime(videoView.currentPosition)
-                    Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
+//                    val tm : String = getVideoTime(videoView.currentPosition)
+//                    Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
+//                    FirebaseDatabase.getInstance().reference.child("VideoTime").child(pId).child(getRandomString(5)).child("time").setValue(tm)
+//                            .addOnSuccessListener {
+//                                Log.d("Time played","Time successfully uploaded")
+//                            }.addOnFailureListener {
+//                                Log.d("Time played Error","Error on posting time played")
+//                            }
                 }
                 else{
                     videoView.start()
@@ -234,7 +239,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
 
         }
 
-        fun getRandomString(length: Int): String {
+        private fun getRandomString(length: Int): String {
             val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
             return (1..length)
                     .map { allowedChars.random() }
