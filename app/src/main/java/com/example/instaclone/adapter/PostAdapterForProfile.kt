@@ -114,7 +114,7 @@ class PostAdapterForProfile(private var mContext: Context, private var isFragmen
 
             FirebaseDatabase.getInstance().reference.child("Users").addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    username.text = snapshot.child("username").value.toString()
+                    username.text = snapshot.child(pubProfile).child("username").value.toString()
                     videoDescription.text = SpannableStringBuilder().bold { append(username.text) }.append(" ").append(post.getDescription())
                 }
 
