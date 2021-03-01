@@ -2,6 +2,8 @@ package com.example.instaclone.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.media.Image
 import android.net.Uri
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.VideoView
 import androidx.annotation.NonNull
 import androidx.core.text.bold
@@ -17,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.instaclone.Model.Post
 import com.example.instaclone.R
+import com.example.instaclone.VideoTimeForVideoPostsActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -95,7 +99,9 @@ class PostAdapterForProfile(private var mContext: Context, private var isFragmen
         val videoDescription : TextView = itemView.findViewById(R.id.post_description_video_profile)
         val loadingAnim : LottieAnimationView = itemView.findViewById(R.id.videoAnimLoading_profile)
         val playBtn : ImageView = itemView.findViewById(R.id.play_btn_profile)
+        val infoBtn : ImageView = itemView.findViewById(R.id.infoBtn)
 
+        @SuppressLint("CommitPrefEdits")
         fun bind (position: Int, mPost: List<Post>){
             val post = mPost[position]
             val pubProfile = post.getpublisher()
@@ -149,6 +155,18 @@ class PostAdapterForProfile(private var mContext: Context, private var isFragmen
                     videoView.start()
                     playBtn.setImageResource(R.drawable.ic_pause)
                 }
+            }
+
+            infoBtn.setOnClickListener {
+                Toast.makeText(itemView.context,"video times in maintenance",Toast.LENGTH_SHORT).show()
+
+                val pref = itemView.context.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
+                pref.apply {
+                    putString("pidForProfileVideoPosts", pidProfile)
+                    apply()
+                }
+
+                itemView.context.startActivity(Intent(itemView.context,VideoTimeForVideoPostsActivity::class.java))
             }
 
 

@@ -214,18 +214,24 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
 //                mediaController.show()
 //            }
 
+            var tm : String? = null
+            val db = FirebaseDatabase.getInstance().reference.child("Video Times").child(pId)
+            var check : Boolean = false
+
             playBtn.setOnClickListener {
                 if (videoView.isPlaying){
                     videoView.pause()
                     playBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
-//                    val tm : String = getVideoTime(videoView.currentPosition)
+                    tm = getVideoTime(videoView.currentPosition)
 //                    Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
-//                    FirebaseDatabase.getInstance().reference.child("VideoTime").child(pId).child(getRandomString(5)).child("time").setValue(tm)
-//                            .addOnSuccessListener {
-//                                Log.d("Time played","Time successfully uploaded")
-//                            }.addOnFailureListener {
-//                                Log.d("Time played Error","Error on posting time played")
-//                            }
+                    if (!check){
+                        db.child(getRandomString(5)).child("time").setValue(tm)
+                                .addOnSuccessListener {
+                                    check = true
+                                }.addOnFailureListener {
+                                    Log.d("Time Error","Unable to save time stamp")
+                                }
+                    }
                 }
                 else{
                     videoView.start()
@@ -233,8 +239,9 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 }
             }
 
-
-
+//            if (tm != null){
+//                Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
+//            }
 
 
         }

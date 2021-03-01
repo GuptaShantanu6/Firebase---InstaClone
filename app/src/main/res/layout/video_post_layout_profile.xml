@@ -69,6 +69,15 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
 
+            <ImageView
+                android:id="@+id/infoBtn"
+                android:src="@drawable/ic_information"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/videoAnimLoading_profile"
                 android:layout_width="30dp"

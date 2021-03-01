@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InstaClone">
-        <activity android:name=".VideoTimeActivity"></activity>
+        <activity android:name=".VideoTimeForVideoPostsActivity"></activity>
+        <activity android:name=".VideoTimeActivity" />
         <activity android:name=".UploadVideoActivity" />
         <activity android:name=".UploadVideActivity" />
         <activity android:name=".CommentsActivity" />
