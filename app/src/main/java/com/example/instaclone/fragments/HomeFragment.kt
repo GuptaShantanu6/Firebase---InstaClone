@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.example.instaclone.Model.Post
 import com.example.instaclone.R
@@ -19,6 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.yalantis.phoenix.PullToRefreshView
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -29,6 +31,7 @@ class   HomeFragment : Fragment() {
     private var mPost : MutableList<Post>? = null
 
     private var currentUser = FirebaseAuth.getInstance().currentUser
+    private lateinit var pullToRefreshView : SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +45,15 @@ class   HomeFragment : Fragment() {
             Toast.makeText(activity,"Chat in Maintenance",Toast.LENGTH_SHORT).show()
         }
 
-        val anim : LottieAnimationView = view.findViewById(R.id.homeActivityIcon)
-        anim.setAnimation("mainActivityAnim.json")
-        anim.playAnimation()
-        anim.loop(true)
+//        val anim : LottieAnimationView = view.findViewById(R.id.homeActivityIcon)
+//        anim.setAnimation("mainActivityAnim.json")
+//        anim.playAnimation()
+//        anim.loop(true)
+
+        pullToRefreshView = view.findViewById(R.id.pull_to_refresh)
+        pullToRefreshView.setOnRefreshListener {
+            initiator()
+        }
 
         initiator()
 
@@ -87,6 +95,9 @@ class   HomeFragment : Fragment() {
     private fun initiator() {
         val checkMap = HashMap<String,Any>()
         val checkDb = FirebaseDatabase.getInstance().reference
+        if (pullToRefreshView.isRefreshing){
+            pullToRefreshView.isRefreshing = false
+        }
         checkDb.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.child("Follow").exists()){
