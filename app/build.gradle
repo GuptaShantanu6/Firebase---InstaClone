@@ -72,11 +72,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.13.1'
 
     //pull-refresh-layout
-    compile 'com.yalantis:phoenix:1.2.3'
-
-
-
-
+    implementation 'com.yalantis:phoenix:1.2.3'
 
 
 

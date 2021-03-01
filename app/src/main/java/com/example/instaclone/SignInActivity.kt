@@ -7,17 +7,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.transition.Explode
 import android.view.View
-import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 
 class SignInActivity : AppCompatActivity() {
@@ -71,8 +69,7 @@ class SignInActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     else{
-                        val message = task.exception.toString()
-                        Toast.makeText(this,"Error : $message", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Wrong credentials entered",Toast.LENGTH_SHORT).show()
                         FirebaseAuth.getInstance().signOut()
                         progressDialog.dismiss()
                     }
