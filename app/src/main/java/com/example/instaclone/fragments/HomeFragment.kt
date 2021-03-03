@@ -160,10 +160,6 @@ class   HomeFragment : Fragment() {
             }
 
         })
-//        for (x in checkMap.keys){
-//            Log.d("keys",x)
-//        }
-//        Log.d("size123",checkMap.size.toString())
     }
 
     fun getRandomString(length: Int): String {

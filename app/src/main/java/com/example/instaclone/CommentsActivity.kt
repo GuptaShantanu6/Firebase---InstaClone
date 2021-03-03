@@ -72,10 +72,6 @@ class CommentsActivity : AppCompatActivity() {
 //                commentAnim.loop(true)
                 submitBtn.isClickable = false
                 val db = FirebaseDatabase.getInstance().reference
-//                db.child("Comments").child(postID).child(currentUser!!.uid).child("commentDescription").child()
-
-//                db.child("Comments").child(postID).child(currentUser!!.uid).child(tempId).child("commentDescription").setValue(typedComment.text.toString())
-//                db.child("Comments").child(postID).child(currentUser.uid).child(tempId).child("commentUserId").setValue(currentUser.uid)
 
                 db.child("Comments").child(postID).child(tempId).child("commentDescription").setValue(typedComment.text.toString())
                 db.child("Comments").child(postID).child(tempId).child("commentUserId").setValue(currentUser!!.uid)
@@ -109,23 +105,6 @@ class CommentsActivity : AppCompatActivity() {
         val db = FirebaseDatabase.getInstance().reference
         db.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.child("Comments").exists()){
-//                    for (ss in snapshot.child("Comments").children){
-//                        for (cccc in ss.children){
-//                            for (xxxx in cccc.children){
-//                                val c = xxxx.getValue(Comment::class.java)
-//                                if (c != null){
-//                                    mComment?.add(c)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                if (snapshot.child("Comments").child(postID).exists()){
-//                    for (ss in snapshot.child("Comments").child(postID).children)
-//                        for (xx in ss.children)
-//                }
-//                commentAdapter?.notifyDataSetChanged()
                 if (snapshot.child("Comments").child(postID).exists()){
                     for (xx in snapshot.child("Comments").child(postID).children){
                         val c = xx.getValue(Comment::class.java)

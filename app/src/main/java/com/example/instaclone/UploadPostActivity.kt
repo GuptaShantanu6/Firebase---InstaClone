@@ -44,20 +44,6 @@ class UploadPostActivity : AppCompatActivity() {
             startActivity(Intent(baseContext, MainActivity::class.java))
         }
 
-//        val debug : Button = findViewById<Button>(R.id.databaseBtn)
-//        debug.setOnClickListener {
-////            val p = HashMap<String,Any>()
-////            p["temp"]="temp"
-////            database.child("Posts").child(getRandomString(5)).setValue(p)
-////            Toast.makeText(this,"Temporary Update to realtime db",Toast.LENGTH_SHORT).show()
-//            val d = Calendar.getInstance()
-//            val sdfr : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
-//            val now = d.time
-//            val dater = sdfr.format(now)
-//            Toast.makeText(this,dater.toString(),Toast.LENGTH_LONG).show()
-//
-//
-//        }
 
         val captureAnim : LottieAnimationView = findViewById(R.id.captureAnim)
         captureAnim.setAnimation("capture.json")
@@ -73,19 +59,7 @@ class UploadPostActivity : AppCompatActivity() {
         addPictureBtn.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
-//            val builder = AlertDialog.Builder(this)
-//            builder.setTitle("Type of Post")
-//            builder.setPositiveButton("Image"){ _: DialogInterface, _: Int ->
-//                Toast.makeText(this,"clicked on image",Toast.LENGTH_SHORT).show()
-//            }
-//            builder.setNegativeButton("Video"){ _: DialogInterface, _: Int ->
-//                Toast.makeText(this,"clicked on video",Toast.LENGTH_SHORT).show()
-//                val gallery = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(gallery,select_video)
-//            }
-//            val alertDialog = builder.create()
-//            alertDialog.setCancelable(false)
-//            alertDialog.show()
+
         }
 
         val description: TextView = findViewById<TextView>(R.id.post_description)
@@ -139,17 +113,6 @@ class UploadPostActivity : AppCompatActivity() {
 
         tempST.child("Photo").putFile(imageUri).addOnSuccessListener {
             tempST.child("Description").putStream(description.byteInputStream()).addOnSuccessListener {
-//                postMap["postImage"] = storage.child("Posts Images").child(currentUser.uid).child(x).child("Photo").downloadUrl.toString()
-
-//                tempST.child("Photo").downloadUrl.let { task ->
-//                    val temp = task.result.toString()
-//                    postMap["postImage"] = temp
-//                }
-//                val newMap = HashMap<String,Any>()
-//                newMap["postImage"] = tempST.child("Description").downloadUrl.result.toString()
-//                database.child("Posts").child(x).updateChildren(newMap)
-
-//                database.child("Posts").child(x).setValue(postMap)
 
                 lottie.loop(false)
 

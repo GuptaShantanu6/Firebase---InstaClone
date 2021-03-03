@@ -89,46 +89,15 @@ class ProfileFragment : Fragment() {
         getFollowers(firebaseUser,total_followers)
         getFollowing(firebaseUser,total_following)
 
-        val imagesGrid : ImageButton = view.findViewById<ImageButton>(R.id.images_grid_view_button)
-        val imagesSave : ImageButton = view.findViewById<ImageButton>(R.id.images_save_button)
+        val imagesGrid : ImageButton = view.findViewById(R.id.images_grid_view_button)
+        val imagesSave : ImageButton = view.findViewById(R.id.images_save_button)
 
 
 
 
-        val usernameUpdated : TextView = view.findViewById<TextView>(R.id.usernameText)
-        val fullnameUpdated : TextView = view.findViewById<TextView>(R.id.full_name_profile_frag)
-        val bioUpdated : TextView = view.findViewById<TextView>(R.id.bio_profile_frag)
-
-//        val debugButton : Button = view.findViewById<Button>(R.id.dImage)
-//
-//        debugButton.setOnClickListener {
-//            storage.child("Default Images").child(firebaseUser.uid).downloadUrl.addOnSuccessListener {
-//                Log.d("Image URL",it.toString())
-//            }
-//        }
-
-//        val currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
-//        val firebaseUser = FirebaseDatabase.getInstance().reference.child("Users")
-
-//        firebaseUser.addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-////                usernameUpdated.text = snapshot.child(currentUserId).child("username").value as CharSequence?
-////                fullnameUpdated.text = snapshot.child(currentUserId).child("fullName").value as CharSequence?
-////                var s : CharSequence? = snapshot.child(currentUserId).child("fullName").value as CharSequence?
-//
-//                val u1 = snapshot.child(currentUserId).child("fullName").value as CharSequence?
-//                val u2 : String = u1.toString().capitalizeFirstLetter()
-//
-//                usernameUpdated.text = snapshot.child(currentUserId).child("username").value as CharSequence?
-//                fullnameUpdated.text = u2
-//                bioUpdated.text = snapshot.child(currentUserId).child("bio").value as CharSequence?
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
+        val usernameUpdated : TextView = view.findViewById(R.id.usernameText)
+        val fullnameUpdated : TextView = view.findViewById(R.id.full_name_profile_frag)
+        val bioUpdated : TextView = view.findViewById(R.id.bio_profile_frag)
 
         changeUserNameAndFullNameAndBio(usernameUpdated,firebaseUser,fullnameUpdated,bioUpdated)
         checkForProfileImage(firebaseUser,profileImage,profileImage)

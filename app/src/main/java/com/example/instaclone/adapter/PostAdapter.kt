@@ -66,12 +66,16 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                     .child(pub).downloadUrl.addOnSuccessListener {
                         val x = it.toString()
                         Glide.with(itemView.context).load(x).into(profileImageView)
+                    }.addOnFailureListener {
+                        Log.d("storage error","timepass1")
                     }
 
             FirebaseStorage.getInstance().reference.child("Posts Images")
                     .child(pub).child(pId).child("Photo").downloadUrl.addOnSuccessListener {
                         val x = it.toString()
                         Glide.with(itemView.context).load(x).into(postImageView)
+                    }.addOnFailureListener {
+                        Log.d("storage error","timepass2")
                     }
 
             commentsView.setOnClickListener {
@@ -187,6 +191,8 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             storage.child("Default Images").child(pub).downloadUrl.addOnSuccessListener {
                 val x = it.toString()
                 Glide.with(itemView.context).load(x).into(profileImageView)
+            }.addOnFailureListener {
+                Log.d("storage error","timepass3")
             }
 
             playBtn.visibility = View.GONE
@@ -196,6 +202,8 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 val x = it.toString()
                 videoView.setMediaController(mediaController)
                 videoView.setVideoURI(Uri.parse(x))
+            }.addOnFailureListener {
+                Log.d("storage error","timepass4")
             }
             videoView.requestFocus()
             videoView.start()
