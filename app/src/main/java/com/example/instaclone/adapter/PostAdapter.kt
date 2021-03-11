@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
+import java.nio.InvalidMarkException
 
 class PostAdapter(private var mContext: Context, private var isFragment: Boolean = true, private var mPost: List<Post>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>()
@@ -156,9 +158,9 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
         val usernameTextView : TextView = itemView.findViewById(R.id.user_name_search)
         val profileImageView : CircleImageView = itemView.findViewById(R.id.user_profile_image_search)
         val postDescriptionTextView : TextView = itemView.findViewById(R.id.post_description_home)
-        val likesView : TextView = itemView.findViewById(R.id.likes)
+        val videoLikes : TextView = itemView.findViewById(R.id.video_likes)
         val commentsView : TextView = itemView.findViewById(R.id.comments)
-        val likeBtn : ImageView = itemView.findViewById(R.id.post_image_likebtn)
+        val likeBtn : ImageView = itemView.findViewById(R.id.video_likeBtn)
         val anim : LottieAnimationView = itemView.findViewById(R.id.videoAnimLoading)
         val mcButton : ImageView = itemView.findViewById(R.id.mcButton)
         val playBtn : ImageView = itemView.findViewById(R.id.play_btn)
@@ -224,7 +226,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
 
             var tm : String? = null
             val db = FirebaseDatabase.getInstance().reference.child("Video Times").child(pId)
-            var check : Boolean = false
+            var check = false
 
             playBtn.setOnClickListener {
                 if (videoView.isPlaying){
@@ -250,6 +252,65 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
 //            if (tm != null){
 //                Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
 //            }
+
+            val likeDb = FirebaseDatabase.getInstance().reference
+            val currentUser = FirebaseAuth.getInstance().currentUser
+
+            var videoCheck = false
+
+            likeDb.addValueEventListener(object : ValueEventListener{
+                @SuppressLint("SetTextI18n")
+                override fun onDataChange(snapshot: DataSnapshot) {
+                     if (snapshot.child("Like").child(pId).child(currentUser!!.uid).exists()){
+                        likeBtn.setImageResource(R.drawable.ic_heart_filled)
+                        videoCheck = true
+                    } else {
+                        likeBtn.setImageResource(R.drawable.ic_heart)
+                    }
+                    videoLikes.text = snapshot.child("Like").child(pId).childrenCount.toString() + "Likes"
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+
+            likeBtn.setOnClickListener {
+                if (videoCheck){
+                    likeBtn.setImageResource(R.drawable.ic_heart)
+                    likeDb.child("Like").child(pId).child(currentUser!!.uid).removeValue()
+                    likeDb.addValueEventListener(object : ValueEventListener{
+                        @SuppressLint("SetTextI18n")
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            videoLikes.text = snapshot.child("Like").child(pId).childrenCount.toString() + "Likes"
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+
+                    })
+                    videoCheck = false
+                }
+                else {
+                    likeBtn.setImageResource(R.drawable.ic_heart_filled)
+                    likeDb.child("Like").child(pId).child(currentUser!!.uid).setValue(true)
+                    likeDb.addValueEventListener(object : ValueEventListener{
+                        @SuppressLint("SetTextI18n")
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            videoLikes.text = snapshot.child("Like").child(pId).childrenCount.toString() + "Likes"
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+
+                    })
+                    videoCheck = true
+                }
+            }
+
 
 
         }
