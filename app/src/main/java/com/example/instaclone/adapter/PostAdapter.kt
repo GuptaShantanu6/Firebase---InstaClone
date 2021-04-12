@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.bold
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -178,6 +179,20 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             anim.playAnimation()
             anim.loop(true)
 
+            commentsView.setOnClickListener {
+                val whichPost = itemView.context.getSharedPreferences("whichIDs",Context.MODE_PRIVATE).edit()
+                whichPost.apply{
+                    putString("postID",pId)
+                    apply()
+                }
+                Log.d("posID_from_videoAdapter",pId)
+
+                val intent = Intent(itemView.context,CommentsActivity::class.java)
+                itemView.context.startActivity(intent)
+
+
+            }
+
 
             FirebaseDatabase.getInstance().reference.child("Users").child(pub).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -227,23 +242,34 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             var tm : String? = null
             val db = FirebaseDatabase.getInstance().reference.child("Video Times").child(pId)
             var check = false
+//
+//            playBtn.setOnClickListener {
+//                if (videoView.isPlaying){
+//                    videoView.pause()
+//                    playBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+//                    tm = getVideoTime(videoView.currentPosition)
+////                    Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
+//                    if (!check){
+//                        db.child(getRandomString(5)).child("time").setValue(tm)
+//                                .addOnSuccessListener {
+//                                    check = true
+//                                }.addOnFailureListener {
+//                                    Log.d("Time Error","Unable to save time stamp")
+//                                }
+//                    }
+//                }
+//                else{
+//                    videoView.start()
+//                    playBtn.setImageResource(R.drawable.ic_pause)
+//                }
+//            }
 
             playBtn.setOnClickListener {
                 if (videoView.isPlaying){
                     videoView.pause()
                     playBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
-                    tm = getVideoTime(videoView.currentPosition)
-//                    Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
-                    if (!check){
-                        db.child(getRandomString(5)).child("time").setValue(tm)
-                                .addOnSuccessListener {
-                                    check = true
-                                }.addOnFailureListener {
-                                    Log.d("Time Error","Unable to save time stamp")
-                                }
-                    }
                 }
-                else{
+                else {
                     videoView.start()
                     playBtn.setImageResource(R.drawable.ic_pause)
                 }
@@ -267,7 +293,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                     } else {
                         likeBtn.setImageResource(R.drawable.ic_heart)
                     }
-                    videoLikes.text = snapshot.child("Like").child(pId).childrenCount.toString() + "Likes"
+                    videoLikes.text = snapshot.child("Like").child(pId).childrenCount.toString() + " Likes"
                 }
 
                 override fun onCancelled(error: DatabaseError) {

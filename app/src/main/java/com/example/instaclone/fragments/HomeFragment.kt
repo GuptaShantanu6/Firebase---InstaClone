@@ -45,10 +45,10 @@ class   HomeFragment : Fragment() {
             Toast.makeText(activity,"Chat in Maintenance",Toast.LENGTH_SHORT).show()
         }
 
-//        val anim : LottieAnimationView = view.findViewById(R.id.homeActivityIcon)
-//        anim.setAnimation("mainActivityAnim.json")
-//        anim.playAnimation()
-//        anim.loop(true)
+        val anim : LottieAnimationView = view.findViewById(R.id.homeActivityIcon)
+        anim.setAnimation("mainActivityAnim.json")
+        anim.playAnimation()
+        anim.loop(true)
 
         pullToRefreshView = view.findViewById(R.id.pull_to_refresh)
         pullToRefreshView.setOnRefreshListener {

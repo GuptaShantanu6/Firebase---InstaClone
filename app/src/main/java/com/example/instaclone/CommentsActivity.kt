@@ -1,11 +1,14 @@
 package com.example.instaclone
 
+import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -83,8 +86,9 @@ class CommentsActivity : AppCompatActivity() {
 //                            initiator2(postID, commentAnim,submitBtn)
 //                            commentAnim.loop(false)
                             submitBtn.isClickable = true
+                            hideKeyboard()
                             Toast.makeText(this@CommentsActivity,"Comment posted, please exit to refresh",Toast.LENGTH_SHORT).show()
-                            initiator2(postID,commentAnim)
+//                            initiator2(postID,commentAnim)
                         }
 
                     }
@@ -135,5 +139,18 @@ class CommentsActivity : AppCompatActivity() {
         return (1..length)
                 .map { allowedChars.random() }
                 .joinToString("")
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
