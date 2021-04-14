@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.bold
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -27,7 +25,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.nio.InvalidMarkException
+import kotlin.concurrent.thread
 
 class PostAdapter(private var mContext: Context, private var isFragment: Boolean = true, private var mPost: List<Post>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>()
@@ -242,6 +245,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
             var tm : String? = null
             val db = FirebaseDatabase.getInstance().reference.child("Video Times").child(pId)
             var check = false
+
 //
 //            playBtn.setOnClickListener {
 //                if (videoView.isPlaying){
@@ -268,6 +272,13 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                 if (videoView.isPlaying){
                     videoView.pause()
                     playBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                    tm = getVideoTime(videoView.currentPosition)
+                    val job = GlobalScope.launch(Dispatchers.Default) {
+                        db.child(getRandomString(5)).child("time").setValue(tm)
+                    }
+                    runBlocking {
+                        job.join()
+                    }
                 }
                 else {
                     videoView.start()
