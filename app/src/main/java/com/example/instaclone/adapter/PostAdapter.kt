@@ -285,10 +285,7 @@ class PostAdapter(private var mContext: Context, private var isFragment: Boolean
                     playBtn.setImageResource(R.drawable.ic_pause)
                 }
             }
-
-//            if (tm != null){
-//                Toast.makeText(itemView.context,tm,Toast.LENGTH_SHORT).show()
-//            }
+            
 
             val likeDb = FirebaseDatabase.getInstance().reference
             val currentUser = FirebaseAuth.getInstance().currentUser
